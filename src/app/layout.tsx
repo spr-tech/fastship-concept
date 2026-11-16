@@ -1,16 +1,34 @@
 import type { Metadata } from "next";
+import { Anton, Inter } from "next/font/google";
+import ConceptBanner from "@/components/layouts/conceptBanner";
+import { site } from "@/data/site";
+import { cn } from "@/utilities/helpers/cn";
 import "./globals.css";
 
+// Anton has a single weight. Inter is variable, so one file covers 400 to 700.
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-anton",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
-  title: "Fastship.Africa redesign concept · Muizz Jamiu",
-  description:
-    "An unofficial redesign concept of fastship.africa. Not affiliated with Fastship.Africa.",
+  title: site.title,
+  description: site.description,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="antialiased">
-      <body>{children}</body>
+    <html lang="en" className={cn(anton.variable, inter.variable, "antialiased")}>
+      <body>
+        <ConceptBanner text={site.conceptNotice} />
+        {children}
+      </body>
     </html>
   );
 }
