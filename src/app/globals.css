@@ -63,6 +63,7 @@
     inset 0 1px 0 color-mix(in oklab, var(--surface) 70%, transparent),
     0 14px 34px -20px color-mix(in oklab, var(--ink) 40%, transparent);
   --shadow-menu: 0 24px 48px -20px color-mix(in oklab, var(--ink) 60%, transparent);
+  --shadow-card: 0 30px 60px -30px color-mix(in oklab, var(--ink) 50%, transparent);
 }
 
 /* Animations, used as animate-<name>. Delays are set where they're used.
