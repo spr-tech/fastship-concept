@@ -273,6 +273,8 @@ This concept has no backend, and it must not pretend to.
   sign in and sign up → fastship.africa, tracking → fastship.africa/tracking,
   contact → support@fastshipafrica.com.
 - The password show/hide toggle is disabled along with its input.
+- Sign-up shows only the static password hint ("Use 8 or more characters with a mix of letters,
+  numbers and symbols"). No strength meter bars: the input is disabled, so they could never change.
 
 ---
 
@@ -317,7 +319,9 @@ Implementation rules:
 - Links stay inside the concept wherever a section exists. Deeper pages the concept doesn't include
   (car import, guides, full FAQ, HS codes, legal) may link to fastship.africa.
 - Use the real logo files only. Never recreate the logo.
-- Plain, short copy. No "seamless", "leverage", "cutting-edge".
+- Plain, short copy. No "seamless", "leverage", "cutting-edge" in copy we write. This does not
+  apply to Fastship's own wording: keep their real copy exactly as it is, e.g. the sign-in subtitle
+  "Your journey to seamless delivery starts here. Track, ship and move forward with confidence."
 
 ---
 
