@@ -14,7 +14,7 @@ type InfoNoteProps = {
 export default function InfoNote({ id, text, variant = "plain", className }: InfoNoteProps) {
   if (variant === "plain") {
     return (
-      <p id={id} className={cn("text-[13px] text-text-muted", className)}>
+      <p id={id} className={cn("text-label text-text-muted", className)}>
         {text}
       </p>
     );
@@ -24,7 +24,7 @@ export default function InfoNote({ id, text, variant = "plain", className }: Inf
     <p
       id={id}
       className={cn(
-        "flex items-start gap-2.5 rounded-[14px] border border-border bg-surface px-3.5 py-3 text-sm leading-normal text-text-body",
+        "flex items-start gap-2.5 rounded-field border border-border bg-surface px-3.5 py-2.5 text-small text-text-body",
         className,
       )}
     >

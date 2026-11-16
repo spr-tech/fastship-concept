@@ -26,24 +26,24 @@ type AccordionProps = {
  */
 export default function Accordion({ items, name, defaultOpenIndex = 0, className }: AccordionProps) {
   return (
-    <div className={cn("flex flex-col gap-3", className)}>
+    <div className={cn("flex flex-col gap-2.5", className)}>
       {items.map((item, index) => (
         <details
           key={item.id}
           name={name}
           open={index === defaultOpenIndex}
-          className="group rounded-[18px] border border-border bg-surface"
+          className="group rounded-card-sm border border-border bg-surface"
         >
-          <summary className="flex min-h-11 cursor-pointer rounded-[18px] list-none items-center justify-between gap-4 px-6 py-5.5 text-left text-lg font-semibold text-ink [&::-webkit-details-marker]:hidden">
+          <summary className="flex min-h-11 cursor-pointer rounded-card-sm list-none items-center justify-between gap-4 px-5 py-4 text-left text-lead font-semibold text-ink [&::-webkit-details-marker]:hidden">
             {item.title}
             <span
               aria-hidden="true"
-              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-bg text-ink transition-[rotate] duration-300 ease-out group-open:rotate-45 group-open:bg-accent"
+              className="flex size-8 shrink-0 items-center justify-center rounded-full bg-bg text-ink transition-[rotate] duration-300 ease-out group-open:rotate-45 group-open:bg-accent"
             >
-              <PlusIcon size={18} />
+              <PlusIcon size={16} />
             </span>
           </summary>
-          <p className="px-6 pb-5.5 leading-[1.6] text-text-body group-open:animate-fade-up group-open:[animation-duration:350ms]">
+          <p className="px-5 pb-4.5 text-body text-text-body group-open:animate-fade-up group-open:[animation-duration:350ms]">
             {item.content}
           </p>
         </details>

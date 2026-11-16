@@ -14,7 +14,7 @@ type FieldLabelProps = {
 
 export default function FieldLabel({ htmlFor, text, optionalText, aside, isHidden = false }: FieldLabelProps) {
   const label = (
-    <label htmlFor={htmlFor} className={cn("text-sm font-semibold text-ink", isHidden && "sr-only")}>
+    <label htmlFor={htmlFor} className={cn("text-label font-semibold text-ink", isHidden && "sr-only")}>
       {text}
       {optionalText && <span className="font-medium text-text-muted"> {optionalText}</span>}
     </label>

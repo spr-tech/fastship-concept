@@ -21,7 +21,7 @@ export default function StatusMessage({ message, className }: StatusMessageProps
   return (
     <p
       className={cn(
-        "animate-fade-up rounded-[14px] bg-ink px-4 py-3.5 text-sm leading-normal text-text-on-dark [animation-duration:300ms]",
+        "animate-fade-up rounded-field bg-ink px-3.5 py-3 text-small text-text-on-dark [animation-duration:300ms]",
         className,
       )}
     >

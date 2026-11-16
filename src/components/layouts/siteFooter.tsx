@@ -5,13 +5,13 @@ import { footer } from "@/data/footer";
 export default function SiteFooter() {
   return (
     <footer className="overflow-hidden bg-ink text-text-on-dark">
-      <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-10 px-5 pt-20 md:px-8">
+      <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-8 px-5 pt-16 md:px-8">
         <div className="flex flex-col gap-4">
-          <Image src={fastshipLogoLight} alt={footer.logoAlt} width={114} height={42} className="h-10.5 w-auto self-start" />
-          <p className="max-w-80 leading-[1.6] text-text-on-dark-muted">{footer.tagline}</p>
+          <Image src={fastshipLogoLight} alt={footer.logoAlt} width={98} height={36} className="h-9 w-auto self-start" />
+          <p className="max-w-80 text-body text-text-on-dark-muted">{footer.tagline}</p>
         </div>
 
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-16 gap-y-10 text-[15px]">
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-12 gap-y-8 text-small">
           {footer.columns.map((column) => (
             <div key={column.title} className="flex flex-col gap-1">
               <h2 className="font-bold text-accent">{column.title}</h2>
@@ -33,13 +33,13 @@ export default function SiteFooter() {
         </nav>
       </div>
 
-      <p className="mx-auto mt-12 max-w-7xl px-5 text-[13px] text-text-on-dark-subtle md:px-8">{footer.conceptNotice}</p>
+      <p className="mx-auto mt-10 max-w-7xl px-5 text-label text-text-on-dark-subtle md:px-8">{footer.conceptNotice}</p>
 
       {/* Flex centring lets the oversized word spill off both edges evenly on narrow screens,
           where text-align: center would push all the overflow to the right. */}
       <div
         aria-hidden="true"
-        className="-mb-10 mt-16 flex justify-center font-display text-[clamp(120px,22vw,330px)] leading-[0.8] tracking-[2px] whitespace-nowrap text-accent"
+        className="-mb-8 mt-12 flex justify-center font-display text-[clamp(6rem,18vw,16.5rem)] leading-[0.8] tracking-[2px] whitespace-nowrap text-accent"
       >
         {footer.wordmark}
       </div>

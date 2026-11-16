@@ -40,19 +40,21 @@ const variantClasses: Record<ButtonVariant, string> = {
   outline: "border-2 border-ink text-ink",
   subtle: "border border-ink/15 font-semibold text-ink hover:bg-ink/5",
   outlineOnDark: "border-[1.5px] border-text-on-dark text-text-on-dark",
-  surface: "border-[1.5px] border-border-strong bg-surface text-[15px] font-semibold text-ink",
+  surface: "border-[1.5px] border-border-strong bg-surface font-semibold text-ink",
 };
 
+// Every size is at least 44px tall, the minimum touch target, with 14px text. "sm" is the nav size;
+// the rest differ in side padding. "xl" is the full-width form submit.
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "min-h-11 gap-2 px-5 text-[15px] font-semibold",
-  md: "min-h-12 px-5.5 text-base",
-  lg: "min-h-13 px-6.5 text-base",
-  xl: "min-h-14 px-6.5 text-base",
+  sm: "min-h-11 gap-2 px-4 text-small font-semibold",
+  md: "min-h-11 gap-2 px-4.5 text-small",
+  lg: "min-h-11 gap-2 px-5 text-small",
+  xl: "min-h-12 gap-2 px-5 text-small",
 };
 
 const shapeClasses: Record<ButtonShape, string> = {
   pill: "rounded-full",
-  rounded: "rounded-[14px]",
+  rounded: "rounded-field",
 };
 
 function isExternal(href: string) {
@@ -72,7 +74,7 @@ export default function Button(props: ButtonProps) {
   } = props;
 
   const classes = cn(
-    "inline-flex cursor-pointer items-center justify-center gap-2.5 text-center font-bold no-underline",
+    "inline-flex cursor-pointer items-center justify-center text-center font-bold no-underline",
     "transition-[translate,background-color] duration-200 ease-out hover:-translate-y-0.5 motion-reduce:hover:translate-none",
     sizeClasses[size],
     variantClasses[variant],

@@ -51,9 +51,9 @@ export default function Input({
       disabled
       className={cn(
         fieldClassName,
-        shape === "pill" && "rounded-full px-5",
+        shape === "pill" && "rounded-full px-4.5",
         prefix && "min-w-0 flex-1",
-        trailing && "pr-15",
+        trailing && "pr-13",
       )}
     />
   );
@@ -71,7 +71,7 @@ export default function Input({
       {prefix ? (
         <div className="flex gap-2">
           <span
-            className={cn(fieldClassName, "flex w-auto shrink-0 items-center px-3.5 font-semibold")}
+            className={cn(fieldClassName, "flex w-auto shrink-0 items-center px-3 font-semibold")}
           >
             {prefix}
           </span>
@@ -80,7 +80,7 @@ export default function Input({
       ) : trailing ? (
         <div className="relative">
           {input}
-          <div className="absolute top-1 right-1">{trailing}</div>
+          <div className="absolute top-0 right-0.5">{trailing}</div>
         </div>
       ) : (
         input

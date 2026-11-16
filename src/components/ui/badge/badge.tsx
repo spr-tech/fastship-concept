@@ -13,11 +13,11 @@ type BadgeProps = {
 };
 
 const variantClasses: Record<BadgeVariant, string> = {
-  surface: "border border-border bg-surface px-4 py-2 text-sm font-medium text-ink",
-  outline: "border-[1.5px] border-ink px-3 py-[5px] text-[13px] font-bold text-ink",
-  dark: "bg-ink-line px-3 py-[7px] text-[13px] font-semibold text-text-on-dark",
-  light: "border border-border-strong bg-bg px-3 py-[7px] text-[13px] font-semibold text-ink",
-  accent: "bg-accent px-3 py-1 text-sm font-bold text-ink",
+  surface: "border border-border bg-surface px-3.5 py-1.5 text-label font-medium text-ink",
+  outline: "border-[1.5px] border-ink px-2.5 py-1 text-label font-bold text-ink",
+  dark: "bg-ink-line px-2.5 py-1.5 text-label font-semibold text-text-on-dark",
+  light: "border border-border-strong bg-bg px-2.5 py-1.5 text-label font-semibold text-ink",
+  accent: "bg-accent px-2.5 py-1 text-label font-bold text-ink",
 };
 
 export default function Badge({ text, variant = "surface", hasPulse = false, as: Tag = "span", className }: BadgeProps) {

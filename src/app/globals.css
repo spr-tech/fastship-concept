@@ -53,10 +53,80 @@
   --font-sans: var(--font-inter);
 }
 
+/* The type and spacing scale. About a third smaller than the design files, which read too large on a
+   laptop at 100% zoom; the design files' sizes are the old scale. Font sizes are in rem so they
+   still grow when someone raises their browser's text size. Never scale the root font size. */
 @theme {
-  /* The desktop nav needs about 1050px for the logo, seven links and two buttons. Below this
+  /* Anton display sizes. The clamp minimum is the phone size, the maximum the desktop size. */
+  --text-display-hero: clamp(2.5rem, 5.2vw, 4.5rem); /* 40–72px */
+  --text-display-hero--line-height: 0.95;
+  --text-display-auth: clamp(2.5rem, 4.2vw, 3.5rem); /* 40–56px */
+  --text-display-auth--line-height: 0.95;
+  --text-display-closing: clamp(2.25rem, 4vw, 3.25rem); /* 36–52px */
+  --text-display-closing--line-height: 0.98;
+  --text-display-section: clamp(2rem, 3.6vw, 2.75rem); /* 32–44px */
+  --text-display-section--line-height: 1;
+  --text-display-contact: clamp(1.875rem, 3vw, 2.375rem); /* 30–38px */
+  --text-display-contact--line-height: 0.95;
+  --text-display-stat: clamp(3rem, 5vw, 4.125rem); /* 48–66px, the "24/7" */
+  --text-display-stat--line-height: 0.9;
+  --text-display-statement: clamp(1.25rem, 2vw, 1.625rem); /* 20–26px */
+  --text-display-statement--line-height: 1.15;
+  --text-display-sm: 1.625rem; /* 26px, "Track a shipment" */
+  --text-display-sm--line-height: 1;
+  --text-display-number: 2.125rem; /* 34px, card numbers */
+  --text-display-number--line-height: 1;
+  --text-display-step: 1.5rem; /* 24px, step circles */
+  --text-display-step--line-height: 1;
+  --text-card-title-lg: 1.3125rem; /* 21px */
+  --text-card-title-lg--line-height: 1.05;
+  --text-card-title: 1.1875rem; /* 19px */
+  --text-card-title--line-height: 1.1;
+  --text-band: 1.1875rem; /* 19px, carrier bands */
+  --text-band--line-height: 1.2;
+
+  /* Inter sizes. Body text never goes below 15px; small labels never below 13px. */
+  --text-form-title: 1.5rem; /* 24px */
+  --text-form-title--line-height: 1.2;
+  --text-title-lg: 1.25rem; /* 20px */
+  --text-title-lg--line-height: 1.2;
+  --text-title: 1.125rem; /* 18px */
+  --text-title--line-height: 1.2;
+  --text-title-sm: 1.0625rem; /* 17px */
+  --text-title-sm--line-height: 1.3;
+  --text-quote: 1.125rem; /* 18px */
+  --text-quote--line-height: 1.45;
+  --text-lead-lg: 1rem; /* 16px, hero intro */
+  --text-lead-lg--line-height: 1.55;
+  --text-lead: 1rem; /* 16px, other intros */
+  --text-lead--line-height: 1.6;
+  --text-body: 0.9375rem; /* 15px, body text */
+  --text-body--line-height: 1.55;
+  --text-small: 0.875rem; /* 14px, nav links, buttons, notices, secondary lines */
+  --text-small--line-height: 1.5;
+  --text-label: 0.8125rem; /* 13px, labels and small print */
+  --text-label--line-height: 1.45;
+
+  /* Corner radii. */
+  --radius-card-lg: 1.375rem; /* 22px, large cards and panels (was 28) */
+  --radius-card: 1.125rem; /* 18px, cards (was 22–24) */
+  --radius-card-sm: 0.875rem; /* 14px, rows and small cards (was 18) */
+  --radius-field: 0.75rem; /* 12px, inputs and inner boxes (was 14) */
+
+  /* Vertical rhythm. Section padding and the gap from a heading block to its content. */
+  --spacing-section-xs: 2rem; /* 32px (was 40) */
+  --spacing-section-sm: 3rem; /* 48px (was 60) */
+  --spacing-section-md: 4rem; /* 64px (was 80) */
+  --spacing-section-lg: 5rem; /* 80px (was 100) */
+  --spacing-section-xl: 5.5rem; /* 88px (was 110) */
+  --spacing-block: 2.75rem; /* 44px (was 56) */
+  --spacing-card: 1.5rem; /* 24px card padding (was 28–32) */
+}
+
+@theme {
+  /* The desktop nav needs about 900px for the logo, seven links and two buttons. Below this
      width the header shows the menu button instead. Used as nav:... */
-  --breakpoint-nav: 70rem;
+  --breakpoint-nav: 64rem;
 
   /* Built from tokens with color-mix, so no raw colour values end up in components. */
   --shadow-glass:
@@ -198,16 +268,19 @@
     background-color: var(--bg);
     color: var(--ink);
     font-family: var(--font-sans);
+    /* Body text default, so unstyled text follows the scale. The root (html) size is left alone. */
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
   }
 
   /* Keeps anchored headings clear of the sticky header. */
   [id] {
-    scroll-margin-top: 84px;
+    scroll-margin-top: 76px;
   }
 
   @media (min-width: 768px) {
     [id] {
-      scroll-margin-top: 96px;
+      scroll-margin-top: 84px;
     }
   }
 

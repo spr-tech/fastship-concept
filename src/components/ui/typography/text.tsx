@@ -1,36 +1,38 @@
 import type { ElementType, ReactNode } from "react";
 import { cn } from "@/utilities/helpers/cn";
 
-// Anton has one weight, so display styles set font-normal: otherwise h1-h3 would ask for bold and
-// the browser would fake it by smearing the glyphs.
+// Sizes and line heights come from the --text-* tokens in globals.css, so the whole site's scale
+// is set in one place. Anton has one weight, so display styles set font-normal: otherwise h1-h3
+// would ask for bold and the browser would fake it by smearing the glyphs.
 const display = "font-display font-normal uppercase";
 
 const variantClasses = {
   // Anton display styles
-  hero: `${display} text-[clamp(56px,9vw,136px)] leading-[0.95] tracking-[0.5px]`,
-  authTitle: `${display} text-[clamp(56px,7vw,108px)] leading-[0.95]`,
-  closing: `${display} text-[clamp(44px,7vw,100px)] leading-[0.98]`,
-  section: `${display} text-[clamp(44px,6vw,84px)] leading-none`,
-  sectionCompact: `${display} text-[clamp(44px,5vw,72px)] leading-[0.95]`,
-  statement: `${display} text-[clamp(28px,3.4vw,44px)] leading-[1.15]`,
-  displaySm: `${display} text-[40px] leading-none`,
-  cardTitleLg: `${display} text-[34px] leading-[1.05]`,
-  cardTitle: `${display} text-[28px] leading-[1.1]`,
-  stat: "font-display font-normal text-[clamp(72px,9vw,120px)] leading-[0.9]",
-  number: "font-display font-normal text-[56px] leading-none",
+  hero: `${display} text-display-hero tracking-[0.5px]`,
+  authTitle: `${display} text-display-auth`,
+  closing: `${display} text-display-closing`,
+  section: `${display} text-display-section`,
+  sectionCompact: `${display} text-display-contact`,
+  statement: `${display} text-display-statement`,
+  displaySm: `${display} text-display-sm`,
+  cardTitleLg: `${display} text-card-title-lg`,
+  cardTitle: `${display} text-card-title`,
+  stat: "font-display font-normal text-display-stat",
+  number: "font-display font-normal text-display-number",
 
   // Inter styles
-  formTitle: "text-[32px] font-bold tracking-[-0.5px]",
-  quote: "text-[22px] leading-[1.45] font-medium",
-  title: "text-2xl leading-[1.2] font-bold",
-  titleSm: "text-xl leading-[1.3] font-bold",
-  leadLg: "text-xl leading-[1.55]",
-  lead: "text-lg leading-[1.55]",
-  body: "text-base leading-[1.55]",
-  small: "text-sm leading-normal",
-  caption: "text-[13px] leading-normal",
-  eyebrow: "text-sm font-bold tracking-[1.5px] uppercase",
-  eyebrowSm: "text-[13px] font-bold tracking-[0.08em] uppercase",
+  formTitle: "text-form-title font-bold tracking-[-0.5px]",
+  quote: "text-quote font-medium",
+  titleLg: "text-title-lg font-bold",
+  title: "text-title font-bold",
+  titleSm: "text-title-sm font-bold",
+  leadLg: "text-lead-lg",
+  lead: "text-lead",
+  body: "text-body",
+  small: "text-small",
+  caption: "text-label",
+  eyebrow: "text-label font-bold tracking-[1.5px] uppercase",
+  eyebrowSm: "text-label font-bold tracking-[0.08em] uppercase",
 } as const;
 
 const toneClasses = {
@@ -63,6 +65,7 @@ const defaultElement: Record<TextVariant, ElementType> = {
   number: "span",
   formTitle: "h2",
   quote: "blockquote",
+  titleLg: "h3",
   title: "h3",
   titleSm: "h3",
   leadLg: "p",
