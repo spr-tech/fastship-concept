@@ -53,6 +53,18 @@
   --font-sans: var(--font-inter);
 }
 
+@theme {
+  /* The desktop nav needs about 1050px for the logo, seven links and two buttons. Below this
+     width the header shows the menu button instead. Used as nav:... */
+  --breakpoint-nav: 70rem;
+
+  /* Built from tokens with color-mix, so no raw colour values end up in components. */
+  --shadow-glass:
+    inset 0 1px 0 color-mix(in oklab, var(--surface) 70%, transparent),
+    0 14px 34px -20px color-mix(in oklab, var(--ink) 40%, transparent);
+  --shadow-menu: 0 24px 48px -20px color-mix(in oklab, var(--ink) 60%, transparent);
+}
+
 /* Animations, used as animate-<name>. Delays are set where they're used.
    Keyframes move with translate/scale/opacity, never transform, so they don't
    overwrite a card's rotate. */
