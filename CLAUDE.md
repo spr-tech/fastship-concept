@@ -229,20 +229,53 @@ Text on an `--accent` fill is always `--ink`, never white: white on that orange 
 - **Display:** Anton 400, uppercase, tight line height (0.95–1). Headings and big numbers only.
 - **Body:** Inter 400, 500, 600 and 700.
 - Both through `next/font/google`, exposed as `--font-anton` and `--font-inter`.
-- Section headings use `clamp(44px, 6vw, 84px)`; the hero headline `clamp(56px, 9vw, 136px)`.
+
+The site runs about a third smaller than the design files, which read too large on a laptop at 100%
+zoom. **The sizes in `docs/design/` are the old scale**: take layout and proportions from them, and
+sizes from the tokens below. Every size is a `--text-*` token in `src/app/globals.css`, in `rem`, used
+through the `Text` component or as `text-<token>`. Never scale the root font size: it breaks people
+who set larger text in their browser.
+
+| Token                      | Size (phone–desktop) | Used for                                       |
+| -------------------------- | -------------------- | ---------------------------------------------- |
+| `display-hero`             | 40–72px              | Hero headline (two lines at 1440px)            |
+| `display-auth`             | 40–56px              | Auth panel headlines                           |
+| `display-closing`          | 36–52px              | Closing CTA                                    |
+| `display-section`          | 32–44px              | Section headings                               |
+| `display-contact`          | 30–38px              | Contact heading                                |
+| `display-stat`             | 48–66px              | "24/7"                                         |
+| `display-statement`        | 20–26px              | The about statement                            |
+| `display-sm` / `display-number` / `display-step` | 26 / 34 / 24px | Track heading, card numbers, step circles |
+| `card-title-lg` / `card-title` | 21 / 19px        | Anton card titles                              |
+| `form-title`, `title-lg`, `title`, `title-sm` | 24, 20, 18, 17px | Inter headings                |
+| `lead-lg`                  | 16px                 | Hero intro                                     |
+| `lead`                     | 16px                 | Other intros, FAQ questions                    |
+| `body`                     | 15px                 | Body text. Never smaller                       |
+| `small`                    | 14px                 | Nav links, buttons, notices, secondary lines   |
+| `label`                    | 13px                 | Labels, badges, small print. Never smaller     |
+
+`cn()` registers these names with tailwind-merge. Add any new token there too, or a colour class
+will silently delete the size.
 
 ### Shape and spacing
 
 - Pills (`rounded-full`) for buttons, chips and the nav bar.
-- Cards: 18–28px radius, matching the design. Inputs: 14px.
+- Radius tokens: `rounded-card-lg` 22px (large cards, panels), `rounded-card` 18px,
+  `rounded-card-sm` 14px (rows, FAQ items), `rounded-field` 12px (inputs, inner boxes).
+- Buttons are 44px tall (`xl`, the full-width form submit, is 48px), with 14px text and 16–20px
+  side padding.
 - Touch targets at least 44px tall.
+- Section padding uses `section-xs/sm/md/lg/xl` (32, 48, 64, 80, 88px). The gap from a heading
+  block to its content is `block` (44px). Card padding is `card` (24px). Card grids use 12–20px gaps.
+- Nav bar: 56px tall, logo 32px tall on desktop and 28px on phones. The desktop nav appears from
+  1024px (`nav:` breakpoint).
 - Page content max width 1280px, 32px side padding on desktop, 20px on mobile.
 
 ---
 
 ## Header
 
-- **Desktop:** a floating, frosted-glass bar, sticky 12px from the top: semi-transparent white,
+- **Desktop:** a floating, frosted-glass bar, sticky 10px from the top: semi-transparent white,
   backdrop blur, a hairline border and a soft shadow, fully rounded. Logo left, seven links centred,
   outlined "Log in" and solid dark "Sign up" with an arrow on the right. The active link is darker
   and bolder, with no coloured pill.

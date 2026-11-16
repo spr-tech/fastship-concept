@@ -14,7 +14,7 @@ type MobileMenuProps = {
 };
 
 // Must match --breakpoint-nav in globals.css: past this width the desktop nav takes over.
-const DESKTOP_QUERY = "(min-width: 70rem)";
+const DESKTOP_QUERY = "(min-width: 64rem)";
 
 function setPageScrollLocked(isLocked: boolean) {
   const value = isLocked ? "hidden" : "";
@@ -114,7 +114,7 @@ export default function MobileMenu({ navigation, activeHref, className }: Mobile
           id={menuId}
           ref={panelRef}
           aria-label={navigation.label}
-          className="absolute inset-x-0 top-[calc(100%+8px)] z-20 flex animate-fade-up flex-col gap-0.5 rounded-3xl bg-ink p-2.5 text-text-on-dark shadow-menu [animation-duration:250ms]"
+          className="absolute inset-x-0 top-[calc(100%+8px)] z-20 flex animate-fade-up flex-col gap-0.5 rounded-card-lg bg-ink p-2 text-text-on-dark shadow-menu [animation-duration:250ms]"
         >
           {navigation.links.map((link) => {
             const isActive = link.href === activeHref;
@@ -125,7 +125,7 @@ export default function MobileMenu({ navigation, activeHref, className }: Mobile
                 aria-current={isActive ? "page" : undefined}
                 onClick={handleLinkClick}
                 className={cn(
-                  "flex min-h-12 items-center rounded-xl px-3 text-[17px] font-semibold",
+                  "flex min-h-11 items-center rounded-field px-3 text-lead font-semibold",
                   isActive ? "bg-ink-line text-accent-on-dark" : "hover:bg-ink-raised",
                 )}
               >
@@ -134,7 +134,7 @@ export default function MobileMenu({ navigation, activeHref, className }: Mobile
             );
           })}
 
-          <div className="mt-2 flex gap-2 border-t border-ink-line pt-2.5">
+          <div className="mt-1.5 flex gap-2 border-t border-ink-line pt-2">
             <Button
               text={navigation.logIn.label}
               href={navigation.logIn.href}

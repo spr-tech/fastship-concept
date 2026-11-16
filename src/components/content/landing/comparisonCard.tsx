@@ -28,44 +28,44 @@ function RouteGraphic() {
 /** The dark card beside the hero copy: a sample route and the five carriers being compared. */
 export default function ComparisonCard() {
   return (
-    <figure className="min-w-0 max-w-145 flex-[1_1_460px] rounded-[28px] bg-ink p-6 text-text-on-dark shadow-card">
+    <figure className="min-w-0 max-w-125 flex-[1_1_400px] rounded-card-lg bg-ink p-5 text-text-on-dark shadow-card">
       <figcaption className="sr-only">{comparison.label}</figcaption>
 
-      <div className="relative h-37.5 overflow-hidden rounded-[18px] bg-ink-raised">
+      <div className="relative h-32 overflow-hidden rounded-card-sm bg-ink-raised">
         <RouteGraphic />
-        <p className="absolute bottom-3.5 left-5 text-[13px]">
+        <p className="absolute bottom-3 left-4 text-label">
           <span className="block text-text-on-dark-subtle">{comparison.from.label}</span>
-          <strong className="text-base">{comparison.from.value}</strong>
+          <strong className="text-body">{comparison.from.value}</strong>
         </p>
-        <p className="absolute right-5 bottom-3.5 text-right text-[13px]">
+        <p className="absolute right-4 bottom-3 text-right text-label">
           <span className="block text-text-on-dark-subtle">{comparison.to.label}</span>
-          <strong className="text-base">{comparison.to.value}</strong>
+          <strong className="text-body">{comparison.to.value}</strong>
         </p>
       </div>
 
-      <div className="mt-4.5 flex items-center justify-between gap-3 text-sm">
+      <div className="mt-3.5 flex items-center justify-between gap-3 text-small">
         <strong>{comparison.title}</strong>
         <span className="text-text-on-dark-subtle">{comparison.meta}</span>
       </div>
 
-      <ul className="mt-3 flex flex-col gap-2">
+      <ul className="mt-2.5 flex flex-col gap-1.5">
         {carriers.map((carrier) => (
-          <li key={carrier.name} className="flex items-center gap-3.5 rounded-[14px] bg-ink-raised px-3.5 py-3">
+          <li key={carrier.name} className="flex items-center gap-3 rounded-field bg-ink-raised px-3 py-2">
             <span
               aria-hidden="true"
-              className="flex size-9 shrink-0 items-center justify-center rounded-[10px] bg-bg text-xs font-bold text-ink"
+              className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-bg text-[0.6875rem] font-bold text-ink"
             >
               {carrier.monogram}
             </span>
-            <span className="flex-1 text-[15px] font-semibold">{carrier.name}</span>
+            <span className="flex-1 text-small font-semibold">{carrier.name}</span>
             {/* Placeholder bars where a quote would load. No prices are shown, because none are real. */}
-            <span aria-hidden="true" className="h-2.5 w-22.5 rounded-md bg-ink-line" />
-            <span aria-hidden="true" className="h-2.5 w-13.5 rounded-md bg-ink-line max-sm:hidden" />
+            <span aria-hidden="true" className="h-2 w-19 rounded-md bg-ink-line" />
+            <span aria-hidden="true" className="h-2 w-11 rounded-md bg-ink-line max-sm:hidden" />
           </li>
         ))}
       </ul>
 
-      <p className="mt-3.5 flex items-center justify-between gap-3 rounded-[14px] bg-accent px-4 py-3.5 text-[15px] font-bold text-ink">
+      <p className="mt-2.5 flex items-center justify-between gap-3 rounded-field bg-accent px-3.5 py-3 text-small font-bold text-ink">
         <span>{comparison.trackingStrip.label}</span>
         <span>{comparison.trackingStrip.value}</span>
       </p>

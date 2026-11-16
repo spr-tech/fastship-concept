@@ -21,7 +21,7 @@ export default function TrackForm({ track }: TrackFormProps) {
 
   return (
     <div className="flex min-w-0 flex-[2_1_420px] flex-col gap-2">
-      <div className="flex flex-wrap items-end gap-2.5">
+      <div className="flex flex-wrap items-end gap-2">
         <Input
           id="track-id"
           name="trackingId"
@@ -34,7 +34,7 @@ export default function TrackForm({ track }: TrackFormProps) {
         <Button
           text={track.buttonText}
           variant="dark"
-          startIcon={<SearchIcon size={20} />}
+          startIcon={<SearchIcon size={18} />}
           onClick={() => setIsNoticeShown(true)}
         />
       </div>

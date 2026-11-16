@@ -24,7 +24,7 @@ export default function Textarea({ id, name, label, describedBy, placeholder, ro
         placeholder={placeholder}
         aria-describedby={describedBy}
         disabled
-        className={cn(fieldClassName, "min-h-30 resize-none py-3.5")}
+        className={cn(fieldClassName, "min-h-26 resize-none py-3")}
       />
     </div>
   );
