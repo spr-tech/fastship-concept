@@ -5,6 +5,9 @@ Fastship's CEO for a frontend role. It is not Fastship's site and must never loo
 pretending to be. The pitch rests on two things: a clearer page, and measurably better performance
 than the live site. Both have to hold up when someone checks.
 
+**This is a demo. It never collects, stores or sends user data. No analytics, no cookies, no
+tracking scripts, no form submissions.** Every note on a turned-off form says so in plain words.
+
 Read this file before making any change. Structure rules come from `docs/frontendStructureGuide.md`
 (the frontend structure guide). The approved screens are in `docs/design/` (see its README). Where
 this file and the guide disagree, this file wins, and the reason is under "Departures from the guide".
@@ -267,11 +270,15 @@ Text on an `--accent` fill is always `--ink`, never white: white on that orange 
 This concept has no backend, and it must not pretend to.
 
 - Every input, select and textarea is `disabled`, styled with the field-disabled tokens, and
-  linked with `aria-describedby` to a visible note saying the form is turned off in this concept.
+  linked with `aria-describedby` to a visible note saying the form is turned off in this concept
+  and that nothing is collected, stored or sent.
 - Every submit-style button stays enabled. Clicking it shows a short message in a
   `role="status"` region explaining it isn't connected, with a link to the real place:
-  sign in and sign up → fastship.africa, tracking → fastship.africa/tracking,
+  sign in, sign up and password reset → fastship.africa, tracking → fastship.africa/tracking,
   contact → support@fastshipafrica.com.
+- "Forgot password?" is a button styled as a link, not a link. It shows the same kind of message,
+  saying password reset isn't connected. On the auth pages, the link inside that message is the
+  only way out to fastship.africa.
 - The password show/hide toggle is disabled along with its input.
 - Sign-up shows only the static password hint ("Use 8 or more characters with a mix of letters,
   numbers and symbols"). No strength meter bars: the input is disabled, so they could never change.
@@ -398,6 +405,7 @@ The guide is written for a data-heavy app. This site has no backend, so:
 | `"use client"` at the top of a page | Ships the whole page as JavaScript                      |
 | Copy inside a component             | Belongs in `src/data/`                                  |
 | An enabled form input               | Every field in this concept is disabled                 |
+| `<form action`, `fetch(`, `cookies(`, analytics or tag scripts | This demo never collects, stores or sends data |
 | `animation-timeline`                | Scroll-linked fades were rejected                       |
 | `transform` in a reveal or hover    | Use `translate` so rotated cards keep their tilt        |
 | Animation without reduced-motion handling | Ignores users who turned motion off               |
