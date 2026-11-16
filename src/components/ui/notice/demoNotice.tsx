@@ -3,17 +3,9 @@
 import { useState } from "react";
 import { cn } from "@/utilities/helpers/cn";
 import Button, { type ButtonProps } from "../button/button";
+import StatusMessage, { type NoticeMessage } from "./statusMessage";
 
-export type NoticeMessage = {
-  /** Text before the link, e.g. "Tracking isn’t connected in this concept." */
-  before: string;
-  link: {
-    label: string;
-    href: string;
-  };
-  /** Text after the link, e.g. "instead." */
-  after?: string;
-};
+export type { NoticeMessage };
 
 type DemoNoticeProps = {
   /** The submit-style button. It stays enabled so the click can explain itself. */
@@ -32,18 +24,7 @@ export default function DemoNotice({ button, message, className }: DemoNoticePro
   return (
     <div className={cn("flex flex-col gap-3.5", className)}>
       <Button {...button} onClick={() => setIsShown(true)} />
-
-      <div role="status">
-        {isShown && (
-          <p className="animate-fade-up rounded-[14px] bg-ink px-4 py-3.5 text-sm leading-normal text-text-on-dark [animation-duration:300ms]">
-            {message.before}{" "}
-            <a href={message.link.href} className="font-bold text-accent-on-dark underline">
-              {message.link.label}
-            </a>
-            {message.after && ` ${message.after}`}
-          </p>
-        )}
-      </div>
+      <div role="status">{isShown && <StatusMessage message={message} />}</div>
     </div>
   );
 }
