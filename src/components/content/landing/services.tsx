@@ -86,7 +86,7 @@ export default function Services() {
         {services.eyebrow}
       </Text>
       <Text variant="section" id="more-title" className="mt-2.5">
-        <span className="block">{services.title[0]}</span>
+        <span className="block">{services.title[0]}</span>{" "}
         <span className="block">{services.title[1]}</span>
       </Text>
 

@@ -25,7 +25,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={cn(anton.variable, inter.variable, "antialiased")}>
-      <body>
+      {/* A full-height column, so the auth layout can fill exactly the space under the concept banner. */}
+      <body className="flex min-h-svh flex-col">
         <ConceptBanner text={site.conceptNotice} />
         {children}
       </body>

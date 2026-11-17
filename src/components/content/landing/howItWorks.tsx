@@ -45,7 +45,7 @@ export default function HowItWorks() {
             {howItWorks.eyebrow}
           </Text>
           <Text variant="section" id="how-title" className="mt-2.5">
-            <span className="block">{howItWorks.title[0]}</span>
+            <span className="block">{howItWorks.title[0]}</span>{" "}
             <span className="block">{howItWorks.title[1]}</span>
           </Text>
         </div>
