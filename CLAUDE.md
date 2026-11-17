@@ -311,7 +311,8 @@ This concept has no backend, and it must not pretend to.
   contact → support@fastshipafrica.com.
 - "Forgot password?" is a button styled as a link, not a link. It shows the same kind of message,
   saying password reset isn't connected. On the auth pages, the link inside that message is the
-  only way out to fastship.africa.
+  only way out to fastship.africa, with one exception: legal references (the sign-up line about the
+  terms of service and privacy policy) link to Fastship's real legal pages.
 - The password show/hide toggle is disabled along with its input.
 - Sign-up shows only the static password hint ("Use 8 or more characters with a mix of letters,
   numbers and symbols"). No strength meter bars: the input is disabled, so they could never change.

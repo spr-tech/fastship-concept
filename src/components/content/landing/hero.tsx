@@ -14,7 +14,7 @@ export default function Hero() {
           with the first HTML. Each line has its own clipping box for the rise-in added in Part 10. */}
       <Text variant="hero" id="hero-title" className="mt-5">
         <span className="block overflow-hidden">
-          <span className="block">{hero.title[0]}</span>
+          <span className="block">{hero.title[0]}</span>{" "}
         </span>
         <span className="block overflow-hidden">
           <span className="block text-accent">{hero.title[1]}</span>

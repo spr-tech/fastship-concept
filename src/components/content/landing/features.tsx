@@ -36,7 +36,7 @@ export default function Features() {
       <TornEdge />
       <div className="mx-auto max-w-7xl px-5 py-section-lg md:px-8">
         <Text variant="section" id="features-title">
-          <span className="block">{features.title[0]}</span>
+          <span className="block">{features.title[0]}</span>{" "}
           <span className="block text-accent">{features.title[1]}</span>
         </Text>
 
