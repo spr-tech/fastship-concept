@@ -53,7 +53,9 @@ Do not add a library without asking first. There is no backend, no auth and no d
 Every form is a disabled demo (see "Forms and buttons").
 
 `experimental.agentFeedback` in `next.config.ts` stays `false`, and `AGENTS.md` has no feedback
-block. Never run the agent feedback command or send anything to Vercel.
+block. Never run the agent feedback command or send agent feedback or telemetry to Vercel.
+Deploying the site to Vercel is fine: it is live at https://fastship-concept.vercel.app/ and
+redeploys whenever `main` is pushed.
 
 ---
 
@@ -480,8 +482,9 @@ Target: Lighthouse 95+ on mobile for Performance, Accessibility, Best Practices 
 | 11   | `feat/metadata`           | Metadata, noindex, robots, Open Graph image, favicon          |
 | 12   | `chore/final-checks`      | Production build, Lighthouse on mobile, fixes                 |
 
-After part 12: deploy to Vercel (not Qocent, whose image optimiser failed on the portfolio) as
-`fastship-concept.vercel.app`, then run PageSpeed Insights on the live URL for the "after" numbers.
+The site is deployed on Vercel (not Qocent, whose image optimiser failed on the portfolio) at
+https://fastship-concept.vercel.app/ and redeploys whenever `main` is pushed. After part 12, run
+PageSpeed Insights on the live URL for the "after" numbers.
 
 ---
 
