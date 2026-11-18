@@ -37,12 +37,4 @@ export const hero: Hero = {
       bookLabel: "Book with",
     },
   },
-  comparison: {
-    label: "Example: comparing five carriers for a 2 kg package from Lagos to London.",
-    from: { label: "From", value: "Lagos, NG" },
-    to: { label: "To", value: "London, UK" },
-    title: "Comparing 5 carriers",
-    meta: "Package · 2 kg",
-    trackingStrip: { label: "Tracking ID", value: "Issued instantly" },
-  },
 };

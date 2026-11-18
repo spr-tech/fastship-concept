@@ -1,10 +1,5 @@
 import type { LinkItem, TwoLineHeading } from "./shared";
 
-export type LabelledValue = {
-  label: string;
-  value: string;
-};
-
 /** One sample shipment row in the hero dashboard. Airport codes and a carrier monogram only. */
 export type HeroShipment = {
   from: string;
@@ -47,13 +42,4 @@ export type Hero = {
   secondaryCta: LinkItem;
   checks: string[];
   visual: HeroVisual;
-  comparison: {
-    /** Describes the card for screen readers, since its moving parts are decorative. */
-    label: string;
-    from: LabelledValue;
-    to: LabelledValue;
-    title: string;
-    meta: string;
-    trackingStrip: LabelledValue;
-  };
 };

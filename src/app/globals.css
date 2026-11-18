@@ -106,6 +106,10 @@
   --text-small--line-height: 1.5;
   --text-label: 0.8125rem; /* 13px, labels and small print */
   --text-label--line-height: 1.45;
+  /* 11px. Only for the decorative interface drawn in the hero visual, which is aria-hidden and
+     described in one sentence for screen readers. Never for real content. */
+  --text-mock: 0.6875rem;
+  --text-mock--line-height: 1.3;
 
   /* Corner radii. */
   --radius-card-lg: 1.375rem; /* 22px, large cards and panels (was 28) */
@@ -534,5 +538,43 @@
     .service-card:focus-within .service-details {
       opacity: 1;
     }
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Hero visual (components/content/landing/heroVisual). Each layer floats on its own loop, and on
+   desktop with a real pointer drifts towards it by --depth px while the dashboard tilts a little,
+   so the layers separate in depth. The pointer position comes from PointerEffects via the hero
+   section's data-pointer. Floating uses translate and the drift uses transform, on different
+   elements. Everything stops under reduced motion (see the base layer).
+   --------------------------------------------------------------------------------------------- */
+@keyframes hero-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+.hero-float {
+  animation: hero-float var(--float-duration, 7s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-layer {
+    transform: translate3d(
+      calc(var(--pointer-dx, 0) * var(--depth, 0) * 1px),
+      calc(var(--pointer-dy, 0) * var(--depth, 0) * 1px),
+      0
+    );
+    transition: transform 0.8s var(--ease-hover);
+  }
+
+  .hero-tilt {
+    transform: perspective(1400px) rotateY(calc(var(--pointer-dx, 0) * 5deg))
+      rotateX(calc(var(--pointer-dy, 0) * -4deg));
+    transition: transform 0.8s var(--ease-hover);
   }
 }
