@@ -31,6 +31,7 @@ const twMerge = extendTailwindMerge({
         "body",
         "small",
         "label",
+        "mock",
       ],
       radius: ["card-lg", "card", "card-sm", "field"],
       spacing: ["section-xs", "section-sm", "section-md", "section-lg", "section-xl", "block", "card"],
