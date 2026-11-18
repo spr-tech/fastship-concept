@@ -80,11 +80,11 @@ One responsive page per route. Mobile designs are 390px wide; desktop 1440px.
 | Track a shipment            | `#track`    | Disabled input, live button with notice                               |
 | About / problem             | `#about`    | Heading + courier photo (desktop only), three numbered cards, closing line |
 | How it works                | `#how`      | Four steps. Desktop: row with a horizontal wavy line. Mobile: centred column with vertical wavy connectors |
-| Features                    | —           | Dark section. Desktop: photo bento. Mobile: compact list rows. Then the 24/7 support banner: one dark card, photo in the right two-thirds fading into it (on top, fading down, on phones), outlined "24/7" behind, "Talk to support" plus glass WhatsApp/Email/Call buttons, an aria-hidden looping support chat over the photo |
+| Features                    | —           | Dark section. From lg: photo bento. Below lg: a sideways row of swipeable cards (native overflow scrolling and scroll-snap, about 82vw each so the next peeks in, photo on top at 16:10 and text below), pagination dots (active one a wider orange pill, each a button) and a "Swipe to see more" hint; the row is a labelled, keyboard-focusable region of list items. Then the 24/7 support banner: one dark card, photo in the right two-thirds fading into it (on top, fading down, on phones), outlined "24/7" behind, "Talk to support" plus glass WhatsApp/Email/Call buttons, an aria-hidden looping support chat over the photo |
 | Not a business?             | `#more`     | Four cards: air cargo, send food home, vehicle import, customs help   |
 | Testimonials                | —           | Fastship's own customer quotes                                        |
 | FAQ                         | `#faq`      | Accordion, six real questions and answers                             |
-| Contact                     | `#contact`  | Dark details panel + disabled form                                    |
+| Contact                     | `#contact`  | Card capped at 1040px. Dark details panel (desktop: email/WhatsApp/phone rows; below lg: one row of three labelled icon buttons; office address as one small line on both) + disabled form (desktop: names in a row, then email, phone and reason three across, 40px fields; phones: 44px fields, names and email/phone side by side) |
 | Closing CTA                 | —           | "Run your logistics from one place."                                  |
 | Footer                      | —           | Light logo, link columns, large "FASTSHIP" wordmark                   |
 
@@ -125,6 +125,7 @@ src/
 │   │   ├── notice/demoNotice.tsx  # The "this is a concept" message
 │   │   ├── reveal/reveal.tsx      # Scroll reveal wrapper (client)
 │   │   ├── pointerEffects/        # Page-wide pointer position for hover effects (client)
+│   │   ├── snapCarousel/          # Swipeable scroll-snap row with dots (client)
 │   │   ├── marquee/marquee.tsx
 │   │   ├── accordion/accordion.tsx
 │   │   ├── icons/icons.tsx
@@ -167,7 +168,8 @@ Rules:
   reveal wrapper, the track/contact/auth notice buttons, the password show/hide toggle, the nav
   scroll marker (`layouts/navScrollState.tsx`), the page-wide pointer listener
   (`ui/pointerEffects/pointerEffects.tsx`) and the hero visual's loop driver
-  (`landing/heroVisual/heroVisualMotion.tsx`). Keep client components small and at the leaves:
+  (`landing/heroVisual/heroVisualMotion.tsx`), and the swipeable card row's dots
+  (`ui/snapCarousel/snapCarousel.tsx`). Keep client components small and at the leaves:
   the last three only set CSS variables or a data attribute and render nothing heavy.
 - Images are static imports from `src/assets/images/`, so `next/image` gets width and height at
   build time. Give every `next/image` a correct `sizes`.
@@ -261,7 +263,7 @@ who set larger text in their browser.
 | `display-auth`             | 40–58px              | Auth panel headlines                           |
 | `display-closing`          | 36–53px              | Closing CTA                                    |
 | `display-section`          | 32–45px              | Section headings                               |
-| `display-contact`          | 30–39px              | Contact heading                                |
+| `display-contact`          | 32–40px              | Contact heading, support banner heading        |
 | `display-stat`             | 48–68px              | "24/7"                                         |
 | `display-statement`        | 20–26px              | The about statement                            |
 | `display-sm` / `display-number` / `display-step` | 26 / 34 / 24px | Track heading, card numbers, step circles |
@@ -364,7 +366,7 @@ Lively but professional. Every animation must have a reason, and all of them sto
 | How it works             | The connecting line draws itself in                                  |
 | Service, testimonial cards | On hover: a spotlight follows the pointer, the card tilts up to 3° towards it and lifts 8px with a soft shadow. Services: illustration zooms, arrow turns 45°, food photos zoom one after another, frosted details panel slides up. Testimonials: card straightens to 0°, quote mark scales and twists, avatar gets an orange ring |
 | "Not a business?" cards  | Desktop: the section pins (180vh) and the cards spread from a fanned stack (-6°, -2°, 2°, 6°, Air cargo on top) into their row between 15% and 75% of the scroll, then hold. Scroll-driven CSS, translate and rotate only |
-| Feature photos           | Zoom to about 104% on hover                                          |
+| Feature photos           | Zoom to about 104% on hover. Below lg the cards swipe and snap; the dots scroll smoothly to a card, instantly under reduced motion |
 | Contact rows             | Highlight slides in from the left, icon square fills orange and tilts, arrow slides right |
 | Buttons and links        | Small lift on hover                                                  |
 | FAQ                      | Answer fades in; plus icon rotates to a cross                        |
