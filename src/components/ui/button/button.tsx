@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { MouseEventHandler, ReactNode } from "react";
 import { cn } from "@/utilities/helpers/cn";
 
-export type ButtonVariant = "accent" | "dark" | "outline" | "subtle" | "outlineOnDark" | "surface";
+export type ButtonVariant = "accent" | "dark" | "outline" | "subtle" | "outlineOnDark" | "surface" | "glassOnDark";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 export type ButtonShape = "pill" | "rounded";
 
@@ -41,6 +41,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   subtle: "border border-ink/15 font-semibold text-ink hover:bg-ink/5",
   outlineOnDark: "border-[1.5px] border-text-on-dark text-text-on-dark",
   surface: "border-[1.5px] border-border-strong bg-surface font-semibold text-ink",
+  // Frosted glass over a dark section or photo.
+  glassOnDark: "border border-text-on-dark/25 bg-text-on-dark/10 font-semibold text-text-on-dark backdrop-blur-md hover:bg-text-on-dark/20",
 };
 
 // Every size is at least 44px tall, the minimum touch target, with 14px text. "sm" is the nav size;

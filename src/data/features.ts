@@ -5,12 +5,17 @@ import international from "@/assets/images/features/international.webp";
 import multiCarrier from "@/assets/images/features/multi-carrier.webp";
 import supportAgent from "@/assets/images/photos/support-agent.webp";
 import type { Features } from "@/models/features";
-import { conceptLinks } from "./links";
+import { conceptLinks, fastshipLinks } from "./links";
 
 // Feature photos have empty alt text: each sits under its own title, so describing the photo
 // would only repeat the heading to screen reader users.
 export const features: Features = {
   title: ["Everything you need,", "in one platform"],
+  carousel: {
+    label: "Platform features",
+    dotLabel: "Show",
+    hint: "Swipe to see more",
+  },
   items: [
     {
       title: "Multi-carrier integration",
@@ -39,10 +44,23 @@ export const features: Features = {
     },
   ],
   support: {
+    eyebrow: "Support · 24/7",
     stat: "24/7",
     title: "Dedicated support team",
-    description: "Technical and logistical assistance from experts.",
+    description: "Technical and logistical assistance from experts, any time of day.",
     cta: { label: "Talk to support", href: conceptLinks.contact },
+    // The same addresses as the contact section.
+    channels: [
+      { label: "WhatsApp", href: fastshipLinks.whatsApp, icon: "chat" },
+      { label: "Email", href: fastshipLinks.email, icon: "mail" },
+      { label: "Call", href: fastshipLinks.phone, icon: "phone" },
+    ],
     image: { src: supportAgent, alt: "A Fastship support agent working at a laptop" },
+    // Illustrative only.
+    chat: {
+      question: "Where’s my package to London?",
+      agent: "Fastship Support",
+      reply: "It landed at LHR this morning and it’s out for delivery today.",
+    },
   },
 };

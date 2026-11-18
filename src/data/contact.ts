@@ -18,7 +18,7 @@ export const contact: Contact = {
     firstNameLabel: "First name",
     lastNameLabel: "Last name",
     emailLabel: "Email",
-    emailPlaceholder: "you@company.com",
+    emailPlaceholder: "you@email.com",
     phoneLabel: "Phone number",
     phonePrefix: "+234",
     reasonLabel: "Reason",

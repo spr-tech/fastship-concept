@@ -1,6 +1,15 @@
-import type { ImageItem, TwoLineHeading } from "./shared";
+import type { ImageItem, LinkItem, TwoLineHeading } from "./shared";
+
+/** The extra detail that slides up over a card on hover, and sits inside it on phones. */
+export type ServiceDetails = {
+  title: string;
+  text: string;
+  /** Left out when there's nowhere real to send people. */
+  link?: LinkItem;
+};
 
 type ServiceCardBase = {
+  details: ServiceDetails;
   title: string;
   description: string;
   /**

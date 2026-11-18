@@ -66,10 +66,12 @@
   --text-display-closing--line-height: 0.98;
   --text-display-section: clamp(2rem, 3.7vw, 2.8125rem); /* 32–45px */
   --text-display-section--line-height: 1;
-  --text-display-contact: clamp(1.875rem, 3.08vw, 2.4375rem); /* 30–39px */
+  --text-display-contact: clamp(2rem, 2.9vw, 2.5rem); /* 32–40px */
   --text-display-contact--line-height: 0.95;
   --text-display-stat: clamp(3rem, 5.15vw, 4.25rem); /* 48–68px, the "24/7" */
   --text-display-stat--line-height: 0.9;
+  --text-display-outline: clamp(8rem, 17vw, 15rem); /* 128–240px, the outlined "24/7" behind the support banner. Decorative */
+  --text-display-outline--line-height: 0.8;
   --text-display-statement: clamp(1.25rem, 2vw, 1.625rem); /* 20–26px */
   --text-display-statement--line-height: 1.15;
   --text-display-sm: 1.625rem; /* 26px, "Track a shipment" */
@@ -94,8 +96,8 @@
   --text-title--line-height: 1.2;
   --text-title-sm: 1.0625rem; /* 17px */
   --text-title-sm--line-height: 1.3;
-  --text-quote: 1.125rem; /* 18px */
-  --text-quote--line-height: 1.45;
+  --text-quote: 1rem; /* 16px, testimonial quotes */
+  --text-quote--line-height: 1.5;
   --text-lead-lg: 1rem; /* 16px, hero intro */
   --text-lead-lg--line-height: 1.55;
   --text-lead: 1rem; /* 16px, other intros */
@@ -106,6 +108,10 @@
   --text-small--line-height: 1.5;
   --text-label: 0.8125rem; /* 13px, labels and small print */
   --text-label--line-height: 1.45;
+  /* 11px. Only for the decorative interface drawn in the hero visual, which is aria-hidden and
+     described in one sentence for screen readers. Never for real content. */
+  --text-mock: 0.6875rem;
+  --text-mock--line-height: 1.3;
 
   /* Corner radii. */
   --radius-card-lg: 1.375rem; /* 22px, large cards and panels (was 28) */
@@ -134,6 +140,8 @@
     0 14px 34px -20px color-mix(in oklab, var(--ink) 40%, transparent);
   --shadow-menu: 0 24px 48px -20px color-mix(in oklab, var(--ink) 60%, transparent);
   --shadow-card: 0 30px 60px -30px color-mix(in oklab, var(--ink) 50%, transparent);
+  /* Cards lifted on hover. */
+  --shadow-lift: 0 26px 44px -26px color-mix(in oklab, var(--ink) 55%, transparent);
 }
 
 /* Animations, used as animate-<name>. Delays are set where they're used.
@@ -141,6 +149,8 @@
    overwrite a card's rotate. */
 @theme {
   --ease-out-soft: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Hover effects: a quick start and a long, soft settle. No overshoot. */
+  --ease-hover: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Hero and auth headline lines rising out of their clipping box. */
   --animate-rise: rise 0.8s var(--ease-out-soft) both;
@@ -357,5 +367,358 @@
     &:hover {
       translate: 0 -6px;
     }
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Pointer cards (service, testimonial). PointerEffects (components/ui/pointerEffects) sets
+   --pointer-x/y and --pointer-dx/dy on the nearest [data-pointer] element, and the card reads them.
+   On hover: a soft spotlight follows the pointer, the card lifts 8px and tilts up to 3deg towards it.
+   The lift uses translate and the tilt uses transform, so a card's own rotate is left alone.
+   Only on devices that can really hover, never under reduced motion. Each card sets --spot.
+   --------------------------------------------------------------------------------------------- */
+.pointer-card {
+  --spot: color-mix(in oklab, var(--surface) 40%, transparent);
+  transition:
+    translate 0.35s var(--ease-hover),
+    rotate 0.35s var(--ease-hover),
+    transform 0.4s var(--ease-hover),
+    box-shadow 0.35s var(--ease-hover);
+}
+
+.pointer-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    280px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    var(--spot),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .pointer-card:hover {
+    translate: 0 -8px;
+    transform: perspective(900px) rotateX(calc(var(--pointer-dy, 0) * -3deg))
+      rotateY(calc(var(--pointer-dx, 0) * 3deg));
+    box-shadow: var(--shadow-lift);
+  }
+
+  .pointer-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Illustrations and photos inside a card zoom a little. --zoom-delay staggers the food photos. */
+  .pointer-card .hover-zoom {
+    transition: scale 0.4s var(--ease-hover);
+    transition-delay: var(--zoom-delay, 0ms);
+  }
+
+  .pointer-card:hover .hover-zoom {
+    scale: 1.06;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   "Not a business?" cards: a fanned stack that spreads into a row as the section scrolls by.
+   Desktop only, scroll-driven (no JavaScript), and only translate and rotate are animated: the
+   cards are always fully opaque. Browsers without scroll-driven animations, reduced motion and
+   anything below lg get the plain layout. Focusing anything inside spreads the stack at once.
+   --------------------------------------------------------------------------------------------- */
+@keyframes stack-spread {
+  from {
+    translate: var(--stack-x) var(--stack-y);
+    rotate: var(--stack-r);
+  }
+  to {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .stack-section {
+      height: 180vh;
+      view-timeline: --service-stack block;
+    }
+
+    .stack-pin {
+      position: sticky;
+      top: 4.5rem;
+      display: flex;
+      /* Shorter than the space under the header, because the section's top padding (88px) is
+         larger than the 72px pin offset at the moment the stack starts. */
+      height: calc(100vh - 6rem);
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* The stack is the entrance, so the cards skip the usual fade-up reveal. */
+    .stack-item .reveal {
+      opacity: 1 !important;
+      translate: none !important;
+    }
+
+    .stack-item {
+      animation: stack-spread linear both;
+      animation-timeline: --service-stack;
+      animation-range: contain 15% contain 75%;
+    }
+
+    /* Each card's offset to the centre of the row is (1.5 - index) card widths plus gaps (0.75rem),
+       pulled back a little so the deck fans out. Air cargo sits on top. */
+    .stack-item:nth-child(1) {
+      --stack-x: calc(150% + 1.125rem - 24px);
+      --stack-y: 14px;
+      --stack-r: -6deg;
+      z-index: 4;
+    }
+    .stack-item:nth-child(2) {
+      --stack-x: calc(50% + 0.375rem - 8px);
+      --stack-y: 2px;
+      --stack-r: -2deg;
+      z-index: 3;
+    }
+    .stack-item:nth-child(3) {
+      --stack-x: calc(-50% - 0.375rem + 8px);
+      --stack-y: 2px;
+      --stack-r: 2deg;
+      z-index: 2;
+    }
+    .stack-item:nth-child(4) {
+      --stack-x: calc(-150% - 1.125rem + 24px);
+      --stack-y: 14px;
+      --stack-r: 6deg;
+      z-index: 1;
+    }
+
+    .stack-section:focus-within .stack-item {
+      animation: none;
+    }
+  }
+}
+
+/* Service details. Below lg, or on a screen that can't hover, the panel sits inside the card as
+   normal content. On desktop with a real pointer it waits below the card's edge and slides up over
+   the lower part on hover or keyboard focus. It is never hidden from screen readers. */
+@media (min-width: 1024px) and (hover: hover) {
+  .service-card {
+    overflow: hidden;
+  }
+
+  .service-details {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 2;
+    margin: 0;
+    border-radius: 0;
+    translate: 0 101%;
+    transition: translate 0.4s var(--ease-hover);
+  }
+
+  .service-card:hover .service-details,
+  .service-card:focus-within .service-details {
+    translate: 0 0;
+  }
+
+  /* Reduced motion: it appears in place instead of sliding. */
+  @media (prefers-reduced-motion: reduce) {
+    .service-details {
+      translate: 0 0;
+      opacity: 0;
+    }
+
+    .service-card:hover .service-details,
+    .service-card:focus-within .service-details {
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Hero visual (components/content/landing/heroVisual). Each layer floats on its own loop, and on
+   desktop with a real pointer drifts towards it by --depth px while the dashboard tilts a little,
+   so the layers separate in depth. The pointer position comes from PointerEffects via the hero
+   section's data-pointer. Floating uses translate and the drift uses transform, on different
+   elements. Everything stops under reduced motion (see the base layer).
+   --------------------------------------------------------------------------------------------- */
+@keyframes hero-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+.hero-float {
+  animation: hero-float var(--float-duration, 7s) ease-in-out var(--float-delay, 0s) infinite;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-layer {
+    transform: translate3d(
+      calc(var(--pointer-dx, 0) * var(--depth, 0) * 1px),
+      calc(var(--pointer-dy, 0) * var(--depth, 0) * 1px),
+      0
+    );
+    transition: transform 0.8s var(--ease-hover);
+  }
+
+  .hero-tilt {
+    transform: perspective(1400px) rotateY(calc(var(--pointer-dx, 0) * 5deg))
+      rotateX(calc(var(--pointer-dy, 0) * -4deg));
+    transition: transform 0.8s var(--ease-hover);
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Site header. Flat at the top of the page: no background, content on the page's edges. Once the
+   page scrolls (data-nav="scrolled", set by NavScrollState), a frosted glass bar fades in behind the
+   content, pulled in from the edges. The glass is its own layer, so the logo, links and buttons never
+   move and nothing shifts. Sticky only once the script has run: without JavaScript the header is a
+   plain flat bar that scrolls away. Reduced motion switches instantly (see the base layer).
+   --------------------------------------------------------------------------------------------- */
+.site-header {
+  position: relative;
+}
+
+html[data-nav] .site-header {
+  position: sticky;
+  top: 0;
+}
+
+.site-header-bar {
+  isolation: isolate;
+}
+
+.site-header-bar::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0.5rem;
+  z-index: -1;
+  border: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--surface) 78%, transparent);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  opacity: 0;
+  scale: 1.03 1.1;
+  transition:
+    opacity 0.45s ease-out,
+    scale 0.45s ease-out;
+}
+
+@media (min-width: 768px) {
+  .site-header-bar::before {
+    inset-inline: 1rem;
+  }
+}
+
+html[data-nav="scrolled"] .site-header-bar::before {
+  opacity: 1;
+  scale: 1;
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Support chat (support banner). A 10s loop: the question appears, typing dots, then the reply,
+   and both clear before it starts again. The resting styles are the reduced-motion state: both
+   bubbles showing, no dots (animations are switched off there by the base layer).
+   --------------------------------------------------------------------------------------------- */
+@keyframes chat-question {
+  0% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  6%,
+  88% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    translate: 0 0;
+  }
+}
+
+@keyframes chat-typing {
+  0%,
+  12% {
+    opacity: 0;
+  }
+  16%,
+  34% {
+    opacity: 1;
+  }
+  38%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes chat-reply {
+  0%,
+  38% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  44%,
+  88% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    translate: 0 0;
+  }
+}
+
+@keyframes chat-dot {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+  }
+  30% {
+    translate: 0 -3px;
+  }
+}
+
+.support-chat-typing {
+  opacity: 0;
+}
+
+.support-chat-question {
+  animation: chat-question 10s ease-out infinite;
+}
+
+.support-chat-typing {
+  animation: chat-typing 10s ease-out infinite;
+}
+
+.support-chat-reply {
+  animation: chat-reply 10s ease-out infinite;
+}
+
+.support-chat-dot {
+  animation: chat-dot 1s ease-in-out infinite;
+}
+
+/* Phones show only the reply, so it stays put instead of looping. */
+@media (max-width: 1023px) {
+  .support-chat-reply {
+    animation: none;
   }
 }

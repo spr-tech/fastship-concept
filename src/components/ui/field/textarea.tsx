@@ -10,10 +10,12 @@ type TextareaProps = {
   describedBy: string;
   placeholder?: string;
   rows?: number;
+  /** Extra classes for the field itself (not its wrapper), e.g. a shorter height in a compact form. */
+  controlClassName?: string;
   className?: string;
 };
 
-export default function Textarea({ id, name, label, describedBy, placeholder, rows = 4, className }: TextareaProps) {
+export default function Textarea({ id, name, label, describedBy, placeholder, rows = 4, controlClassName, className }: TextareaProps) {
   return (
     <div className={cn(fieldGroupClassName, className)}>
       <FieldLabel htmlFor={id} text={label} />
@@ -24,7 +26,7 @@ export default function Textarea({ id, name, label, describedBy, placeholder, ro
         placeholder={placeholder}
         aria-describedby={describedBy}
         disabled
-        className={cn(fieldClassName, "min-h-26 resize-none py-3")}
+        className={cn(fieldClassName, "min-h-22 resize-none py-2.5", controlClassName)}
       />
     </div>
   );

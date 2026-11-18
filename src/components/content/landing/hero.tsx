@@ -3,11 +3,12 @@ import Button from "@/components/ui/button/button";
 import { ArrowRightIcon, CheckIcon } from "@/components/ui/icons/icons";
 import Text from "@/components/ui/typography/text";
 import { hero } from "@/data/hero";
-import ComparisonCard from "./comparisonCard";
+import HeroVisual from "./heroVisual/heroVisual";
 
 export default function Hero() {
   return (
-    <section id="top" aria-labelledby="hero-title" className="mx-auto max-w-7xl px-5 pt-10 pb-section-md md:px-8">
+    // data-pointer: the hero visual's layers drift towards the pointer anywhere in the hero.
+    <section id="top" aria-labelledby="hero-title" data-pointer className="mx-auto max-w-7xl px-5 pt-10 pb-section-md md:px-8">
       <Badge text={hero.badge} hasPulse className="animate-fade-up" />
 
       {/* The headline is plain text, so it is the LCP (Largest Contentful Paint) element and paints
@@ -21,7 +22,7 @@ export default function Hero() {
         </span>
       </Text>
 
-      <div className="mt-block flex flex-wrap items-start gap-10">
+      <div className="mt-block flex flex-wrap items-start gap-10 lg:gap-12">
         <div className="min-w-0 flex-[1_1_380px] animate-fade-up [animation-delay:350ms] [animation-duration:700ms]">
           <Text variant="leadLg" tone="body" className="max-w-115">
             {hero.intro}
@@ -47,7 +48,7 @@ export default function Hero() {
           </ul>
         </div>
 
-        <ComparisonCard />
+        <HeroVisual />
       </div>
     </section>
   );

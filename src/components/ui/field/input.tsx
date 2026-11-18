@@ -20,6 +20,8 @@ type InputProps = {
   /** Sits inside the right edge of the input, e.g. the password show/hide toggle. */
   trailing?: ReactNode;
   shape?: "rounded" | "pill";
+  /** Extra classes for the field itself (not its wrapper), e.g. a shorter height in a compact form. */
+  controlClassName?: string;
   className?: string;
 };
 
@@ -37,6 +39,7 @@ export default function Input({
   prefix,
   trailing,
   shape = "rounded",
+  controlClassName,
   className,
 }: InputProps) {
   const input = (
@@ -54,6 +57,7 @@ export default function Input({
         shape === "pill" && "rounded-full px-4.5",
         prefix && "min-w-0 flex-1",
         trailing && "pr-13",
+        controlClassName,
       )}
     />
   );
@@ -71,7 +75,7 @@ export default function Input({
       {prefix ? (
         <div className="flex gap-2">
           <span
-            className={cn(fieldClassName, "flex w-auto shrink-0 items-center px-3 font-semibold")}
+            className={cn(fieldClassName, "flex w-auto shrink-0 items-center px-3 font-semibold", controlClassName)}
           >
             {prefix}
           </span>
