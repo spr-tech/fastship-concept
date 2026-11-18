@@ -94,8 +94,8 @@
   --text-title--line-height: 1.2;
   --text-title-sm: 1.0625rem; /* 17px */
   --text-title-sm--line-height: 1.3;
-  --text-quote: 1.125rem; /* 18px */
-  --text-quote--line-height: 1.45;
+  --text-quote: 1rem; /* 16px, testimonial quotes */
+  --text-quote--line-height: 1.5;
   --text-lead-lg: 1rem; /* 16px, hero intro */
   --text-lead-lg--line-height: 1.55;
   --text-lead: 1rem; /* 16px, other intros */

@@ -23,7 +23,7 @@ const icons: Record<ContactIcon, ReactNode> = {
 function DetailRow({ detail }: { detail: ContactDetail }) {
   const content = (
     <>
-      <span className="flex size-11 shrink-0 items-center justify-center rounded-field bg-ink-line text-accent-on-dark">
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-field bg-ink-line text-accent-on-dark">
         {icons[detail.icon]}
       </span>
       <span className="flex min-w-0 flex-col gap-0.5">
@@ -32,7 +32,7 @@ function DetailRow({ detail }: { detail: ContactDetail }) {
       </span>
     </>
   );
-  const rowClasses = "flex items-center gap-3.5 border-t border-ink-line py-3.5";
+  const rowClasses = "flex items-center gap-3 border-t border-ink-line py-3";
 
   if (!detail.href) return <div className={rowClasses}>{content}</div>;
 
@@ -56,7 +56,7 @@ export default function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="mx-auto max-w-7xl px-5 pb-section-xl md:px-8">
       <Reveal className="flex flex-wrap overflow-hidden rounded-card-lg border border-border bg-surface">
-        <div className="flex flex-[1_1_380px] flex-col justify-between gap-8 bg-ink p-[clamp(1.5rem,3.2vw,2.5rem)] text-text-on-dark">
+        <div className="flex flex-[1_1_360px] flex-col gap-6 bg-ink p-[clamp(1.25rem,2.6vw,2rem)] text-text-on-dark">
           <div>
             <Text variant="eyebrowSm" tone="accentOnDark">
               {contact.eyebrow}
@@ -77,11 +77,11 @@ export default function Contact() {
           </ul>
         </div>
 
-        <div className="min-w-0 flex-[1.3_1_440px] p-[clamp(1.5rem,3.2vw,2.5rem)]">
+        <div className="min-w-0 flex-[1.3_1_420px] p-[clamp(1.25rem,2.6vw,2rem)]">
           <Text variant="titleLg">{form.title}</Text>
           <InfoNote id={NOTE_ID} text={form.note} className="mt-1.5 text-small" />
 
-          <div className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4">
+          <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
             <Input id="ct-first" name="firstName" label={form.firstNameLabel} autoComplete="given-name" describedBy={NOTE_ID} />
             <Input id="ct-last" name="lastName" label={form.lastNameLabel} autoComplete="family-name" describedBy={NOTE_ID} />
             <Input
@@ -113,11 +113,11 @@ export default function Contact() {
               describedBy={NOTE_ID}
               className="col-span-full"
             />
-            <Textarea id="ct-msg" name="message" label={form.messageLabel} describedBy={NOTE_ID} className="col-span-full" />
+            <Textarea id="ct-msg" name="message" label={form.messageLabel} rows={3} describedBy={NOTE_ID} className="col-span-full" />
           </div>
 
           <DemoNotice
-            className="mt-6"
+            className="mt-5"
             button={{
               text: form.buttonText,
               variant: "accent",

@@ -27,19 +27,19 @@ export default function Testimonials() {
         </Text>
       </Reveal>
 
-      <div className="mt-10 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
+      <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
         {testimonials.items.map((testimonial, index) => {
           const style = cardStyles[index % cardStyles.length];
           return (
-            <Reveal key={testimonial.name} as="figure" index={index} className={cn("lift rounded-card-lg p-7", style.card)}>
-              <QuoteIcon size={32} className="text-accent" />
-              <Text variant="quote" className="mt-4 mb-6">
+            <Reveal key={testimonial.name} as="figure" index={index} className={cn("lift rounded-card-lg p-5.5", style.card)}>
+              <QuoteIcon size={28} className="text-accent" />
+              <Text variant="quote" className="mt-3 mb-5">
                 {testimonial.quote}
               </Text>
               <figcaption className="flex items-center gap-3">
                 <span
                   aria-hidden="true"
-                  className={cn("flex size-11 shrink-0 items-center justify-center rounded-full text-small font-bold", style.avatar)}
+                  className={cn("flex size-10 shrink-0 items-center justify-center rounded-full text-label font-bold", style.avatar)}
                 >
                   {testimonial.initials}
                 </span>

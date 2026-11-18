@@ -44,7 +44,7 @@ function ServiceCard({ tone, index, title, description, href, corner, children }
       as="article"
       index={index}
       className={cn(
-        "group lift relative flex min-h-72 flex-col justify-between rounded-card-lg p-card",
+        "group lift relative flex min-h-60 flex-col justify-between rounded-card-lg p-5",
         classes.card,
         href && "has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ink",
       )}
@@ -83,7 +83,7 @@ function ServiceCard({ tone, index, title, description, href, corner, children }
 }
 
 function IllustrationFrame({ children }: { children: ReactNode }) {
-  return <div className="mt-5 aspect-4/3 overflow-hidden rounded-card-sm">{children}</div>;
+  return <div className="mx-auto mt-4 aspect-4/3 h-36 max-w-full overflow-hidden rounded-card-sm">{children}</div>;
 }
 
 export default function Services() {
@@ -101,7 +101,7 @@ export default function Services() {
         </Text>
       </Reveal>
 
-      <div className="mt-block grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
+      <div className="mt-block grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3">
         <ServiceCard
           tone="accent"
           index={0}
@@ -110,7 +110,7 @@ export default function Services() {
           href={airCargo.href}
           corner={<Badge text={airCargo.badge} variant="outline" />}
         >
-          <div className="my-5 aspect-4/3 overflow-hidden rounded-card-sm">
+          <div className="mx-auto my-4 aspect-4/3 h-36 max-w-full overflow-hidden rounded-card-sm">
             <AirCargoIllustration
               label={airCargo.illustrationLabel ?? ""}
               origin={airCargo.origin}
@@ -127,7 +127,7 @@ export default function Services() {
           href={food.href}
           corner={<span className="text-label font-bold text-accent-text">{food.kicker}</span>}
         >
-          <ul aria-label={food.itemsLabel} className="my-5 grid grid-cols-3 gap-2.5">
+          <ul aria-label={food.itemsLabel} className="my-4 grid grid-cols-3 gap-2">
             {food.items.map((item) => (
               <li key={item.label} className="flex flex-col gap-1.5">
                 <div className="relative aspect-square overflow-hidden rounded-field">
@@ -152,7 +152,7 @@ export default function Services() {
             <IllustrationFrame>
               <VehicleImportIllustration label={vehicle.illustrationLabel ?? ""} destination={vehicle.destination} />
             </IllustrationFrame>
-            <ol className="my-5 flex flex-wrap gap-2">
+            <ol className="my-4 flex flex-wrap gap-1.5">
               {vehicle.steps.map((step, index) => (
                 <Badge key={step} as="li" variant="dark" text={`${index + 1} ${step}`} />
               ))}
@@ -176,7 +176,7 @@ export default function Services() {
                 stamp={customs.stamp}
               />
             </IllustrationFrame>
-            <ul className="my-5 flex flex-wrap gap-2">
+            <ul className="my-4 flex flex-wrap gap-1.5">
               {customs.topics.map((topic) => (
                 <Badge key={topic} as="li" variant="light" text={topic} />
               ))}
