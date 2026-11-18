@@ -8,21 +8,21 @@ import ComparisonCard from "./comparisonCard";
 export default function Hero() {
   return (
     <section id="top" aria-labelledby="hero-title" className="mx-auto max-w-7xl px-5 pt-10 pb-section-md md:px-8">
-      <Badge text={hero.badge} hasPulse />
+      <Badge text={hero.badge} hasPulse className="animate-fade-up" />
 
       {/* The headline is plain text, so it is the LCP (Largest Contentful Paint) element and paints
-          with the first HTML. Each line has its own clipping box for the rise-in added in Part 10. */}
+          with the first HTML. Each line rises from below its own clipping box. */}
       <Text variant="hero" id="hero-title" className="mt-5">
         <span className="block overflow-hidden">
-          <span className="block">{hero.title[0]}</span>{" "}
+          <span className="block animate-rise">{hero.title[0]}</span>{" "}
         </span>
         <span className="block overflow-hidden">
-          <span className="block text-accent">{hero.title[1]}</span>
+          <span className="block animate-rise text-accent [animation-delay:150ms]">{hero.title[1]}</span>
         </span>
       </Text>
 
       <div className="mt-block flex flex-wrap items-start gap-10">
-        <div className="min-w-0 flex-[1_1_380px]">
+        <div className="min-w-0 flex-[1_1_380px] animate-fade-up [animation-delay:350ms] [animation-duration:700ms]">
           <Text variant="leadLg" tone="body" className="max-w-115">
             {hero.intro}
           </Text>

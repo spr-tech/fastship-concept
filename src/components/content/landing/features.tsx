@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Button from "@/components/ui/button/button";
 import DesktopOnlyImage from "@/components/ui/image/desktopOnlyImage";
+import Reveal from "@/components/ui/reveal/reveal";
 import Text from "@/components/ui/typography/text";
 import { features } from "@/data/features";
 import { cn } from "@/utilities/helpers/cn";
@@ -14,6 +15,10 @@ import { cn } from "@/utilities/helpers/cn";
 // thumbnail candidates out of the srcset.
 const WIDE_SIZES = "(min-width: 860px) 800px, 148px";
 const CARD_SIZES = "(min-width: 860px) 400px, 148px";
+
+// Photos zoom to 104% while their card is hovered.
+const photoZoom =
+  "object-cover transition-[scale] duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] motion-safe:group-hover:scale-104";
 
 /** The ragged top edge that makes the dark section look torn from the page above. */
 function TornEdge() {
@@ -35,19 +40,23 @@ export default function Features() {
     <section aria-labelledby="features-title" className="relative bg-ink text-text-on-dark">
       <TornEdge />
       <div className="mx-auto max-w-7xl px-5 py-section-lg md:px-8">
-        <Text variant="section" id="features-title">
-          <span className="block">{features.title[0]}</span>{" "}
-          <span className="block text-accent">{features.title[1]}</span>
-        </Text>
+        <Reveal>
+          <Text variant="section" id="features-title">
+            <span className="block">{features.title[0]}</span>{" "}
+            <span className="block text-accent">{features.title[1]}</span>
+          </Text>
+        </Reveal>
 
         <ul className="mt-block flex flex-col gap-2 min-[860px]:grid min-[860px]:grid-cols-3 min-[860px]:gap-3">
           {features.items.map((feature, index) => {
             const isWide = index === 0;
             return (
-              <li
+              <Reveal
                 key={feature.title}
+                as="li"
+                index={index}
                 className={cn(
-                  "relative isolate flex items-center gap-3.5 overflow-hidden rounded-card-sm bg-ink-raised py-2 pr-3 pl-2",
+                  "group relative isolate flex items-center gap-3.5 overflow-hidden rounded-card-sm bg-ink-raised py-2 pr-3 pl-2",
                   "min-[860px]:flex-col min-[860px]:items-stretch min-[860px]:justify-end min-[860px]:gap-0 min-[860px]:rounded-card min-[860px]:p-0",
                   isWide && "min-[860px]:col-span-2",
                   index < 2 ? "min-[860px]:min-h-76" : "min-[860px]:min-h-68",
@@ -59,7 +68,7 @@ export default function Features() {
                     alt={feature.image.alt}
                     fill
                     sizes={isWide ? WIDE_SIZES : CARD_SIZES}
-                    className="object-cover"
+                    className={photoZoom}
                   />
                 </div>
                 {/* Darkens the bottom of the photo so the text on it stays readable. Desktop only. */}
@@ -78,7 +87,7 @@ export default function Features() {
                     {feature.description}
                   </p>
                 </div>
-              </li>
+              </Reveal>
             );
           })}
         </ul>
@@ -93,7 +102,7 @@ function SupportBanner() {
   const { support } = features;
 
   return (
-    <article className="mt-3 flex flex-wrap overflow-hidden rounded-card bg-accent text-ink">
+    <Reveal as="article" className="group mt-3 flex flex-wrap overflow-hidden rounded-card bg-accent text-ink">
       <div className="flex flex-[1_1_320px] flex-col justify-between gap-6 p-[clamp(1.5rem,3.2vw,2.5rem)]">
         <Text variant="stat">{support.stat}</Text>
         <div>
@@ -109,8 +118,9 @@ function SupportBanner() {
           alt={support.image.alt}
           hiddenBelow="(width < 860px)"
           sizes="(min-width: 1280px) 520px, 50vw"
+          className={photoZoom}
         />
       </div>
-    </article>
+    </Reveal>
   );
 }

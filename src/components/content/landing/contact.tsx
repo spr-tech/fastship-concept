@@ -5,6 +5,7 @@ import Textarea from "@/components/ui/field/textarea";
 import { ArrowRightIcon, ChatIcon, MailIcon, MapPinIcon, PhoneIcon } from "@/components/ui/icons/icons";
 import DemoNotice from "@/components/ui/notice/demoNotice";
 import InfoNote from "@/components/ui/notice/infoNote";
+import Reveal from "@/components/ui/reveal/reveal";
 import Text from "@/components/ui/typography/text";
 import { contact } from "@/data/contact";
 import type { ContactDetail, ContactIcon } from "@/models/contact";
@@ -38,7 +39,11 @@ function DetailRow({ detail }: { detail: ContactDetail }) {
   return (
     <a href={detail.href} className={`group ${rowClasses}`}>
       {content}
-      <span aria-hidden="true" className="ml-auto text-text-on-dark-subtle">
+      {/* Slides right and turns orange while the row is hovered. */}
+      <span
+        aria-hidden="true"
+        className="ml-auto text-text-on-dark-subtle transition-[translate,color] duration-250 group-hover:text-accent-on-dark motion-safe:group-hover:translate-x-1"
+      >
         <ArrowRightIcon size={16} />
       </span>
     </a>
@@ -50,7 +55,7 @@ export default function Contact() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="mx-auto max-w-7xl px-5 pb-section-xl md:px-8">
-      <div className="flex flex-wrap overflow-hidden rounded-card-lg border border-border bg-surface">
+      <Reveal className="flex flex-wrap overflow-hidden rounded-card-lg border border-border bg-surface">
         <div className="flex flex-[1_1_380px] flex-col justify-between gap-8 bg-ink p-[clamp(1.5rem,3.2vw,2.5rem)] text-text-on-dark">
           <div>
             <Text variant="eyebrowSm" tone="accentOnDark">
@@ -123,7 +128,7 @@ export default function Contact() {
             message={form.notice}
           />
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

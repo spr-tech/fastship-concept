@@ -22,9 +22,16 @@ before writing code. Don't rely on older Next.js patterns.
 - Build each part yourself, run the checks, then stop and summarise what you built and why, so I
   can review and test before the next part.
 - One branch per part, created from an up-to-date `main`, named after the part (see "Build plan").
-  Don't commit or merge on your own. When a part is done, tell me the branch name.
-- When I reply "approved", commit with a clear message, merge into `main`, push, then start the
-  next part on a new branch. If I reply with changes, make them and stop again.
+  When a part is done, tell me the branch name.
+- While building a part, commit as you go:
+  - Commit each time a logical piece is finished, and never let more than 10 changed files build
+    up without committing.
+  - Each commit must pass `npx tsc --noEmit` and `npm run lint`.
+  - Write clear commit messages that describe the change, not "WIP".
+  - After each commit, push the branch to GitHub (`git push -u origin <branch>`), then keep
+    working on the same branch.
+  - Never merge into `main` until I reply "approved". After "approved", merge into `main`, push,
+    and start the next part on a new branch. If I reply with changes, make them and stop again.
 - Give the full path of every file you mention.
 - Spell out every abbreviation the first time, e.g. LCP (Largest Contentful Paint).
 - If something I ask for is a bad idea, push back and say why.
@@ -44,6 +51,9 @@ pages opened. Fix anything that fails before stopping.
 
 Do not add a library without asking first. There is no backend, no auth and no data fetching.
 Every form is a disabled demo (see "Forms and buttons").
+
+`experimental.agentFeedback` in `next.config.ts` stays `false`, and `AGENTS.md` has no feedback
+block. Never run the agent feedback command or send anything to Vercel.
 
 ---
 
@@ -356,6 +366,9 @@ Implementation rules:
 
 - Only Fastship's real content: their services, carriers, contact details, FAQ answers and
   testimonials, as in the design files. Never invent stats, prices, partners or features.
+- Testimonials: three quotes, in this order: Ade A. (Lagos), Favour O. (Jos), Daniel I. (Abuja).
+  Initials in a circle instead of photos. Words kept as Fastship's customers wrote them, with only
+  typos and the brand name fixed.
 - The concept banner is always visible, and the footer says it's unofficial too.
 - Links stay inside the concept wherever a section exists. Deeper pages the concept doesn't include
   (car import, guides, full FAQ, HS codes, legal) may link to fastship.africa.

@@ -43,16 +43,16 @@ export function PanelHeading({ logo, logoAlt, title, secondLineClassName, text, 
         <Image src={logo} alt={logoAlt} width={98} height={36} loading="eager" className="h-8 w-auto lg:h-9" />
       </a>
       <div>
-        {/* Each line has its own clipping box for the rise-in added in Part 10. */}
+        {/* Each line rises from below its own clipping box, the second a moment after the first. */}
         <Text variant="authTitle">
           <span className="block overflow-hidden">
-            <span className="block">{title[0]}</span>{" "}
+            <span className="block animate-rise">{title[0]}</span>{" "}
           </span>
           <span className="block overflow-hidden">
-            <span className={cn("block", secondLineClassName)}>{title[1]}</span>
+            <span className={cn("block animate-rise [animation-delay:120ms]", secondLineClassName)}>{title[1]}</span>
           </span>
         </Text>
-        <Text variant="lead" className={cn("mt-4 max-w-105", textClassName)}>
+        <Text variant="lead" className={cn("mt-4 max-w-105 animate-fade-up [animation-delay:300ms]", textClassName)}>
           {text}
         </Text>
       </div>

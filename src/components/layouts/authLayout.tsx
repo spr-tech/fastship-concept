@@ -32,7 +32,7 @@ export default function AuthLayout({ panel, panelTone, children }: AuthLayoutPro
       </header>
 
       <main className="flex min-w-0 flex-1 items-center justify-center px-5 py-8 lg:px-10 lg:py-12">
-        <div className="w-full max-w-110">{children}</div>
+        <div className="w-full max-w-110 animate-fade-up [animation-delay:200ms]">{children}</div>
       </main>
     </div>
   );
