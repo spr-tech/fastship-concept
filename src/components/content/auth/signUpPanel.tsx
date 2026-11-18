@@ -16,13 +16,14 @@ export default function SignUpPanel({ panel }: { panel: SignUp["panel"] }) {
         text={panel.text}
         textClassName="font-medium"
       />
-      {/* Desktop only. Decorative: the paragraph above already names the five carriers. Part 10 makes them bob. */}
+      {/* Desktop only. Decorative: the paragraph above already names the five carriers. Each bobs gently, a beat after the one before. */}
       <ul aria-hidden="true" className="flex max-w-120 flex-wrap gap-2.5 max-lg:hidden">
         {carriers.map((carrier, index) => (
           <li
             key={carrier.wordmark}
+            style={{ animationDelay: `${index * 350}ms` }}
             className={cn(
-              "rounded-full px-4 py-2.5 font-display text-band tracking-[0.5px]",
+              "animate-bob rounded-full px-4 py-2.5 font-display text-band tracking-[0.5px] [animation-duration:3.2s]",
               index % 2 === 0 ? "bg-ink text-text-on-dark" : "bg-bg text-ink",
             )}
           >
