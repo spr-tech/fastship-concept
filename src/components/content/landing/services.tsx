@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import Badge from "@/components/ui/badge/badge";
 import { ArrowRightIcon, BookIcon, CarIcon } from "@/components/ui/icons/icons";
+import Reveal from "@/components/ui/reveal/reveal";
 import Text from "@/components/ui/typography/text";
 import { services } from "@/data/services";
 import { cn } from "@/utilities/helpers/cn";
@@ -20,6 +21,8 @@ const toneClasses: Record<CardTone, { card: string; description: string; arrow: 
 
 type ServiceCardProps = {
   tone: CardTone;
+  /** Position in the row, for the staggered scroll reveal. */
+  index: number;
   title: string;
   description: string;
   /** Without one the card has no link and no arrow, so it doesn't look clickable. */
@@ -33,13 +36,15 @@ type ServiceCardProps = {
  * The link sits on the title and stretches over the whole card with ::after. The whole card stays
  * clickable, but the link's accessible name is just the title, not every word and drawing inside it.
  */
-function ServiceCard({ tone, title, description, href, corner, children }: ServiceCardProps) {
+function ServiceCard({ tone, index, title, description, href, corner, children }: ServiceCardProps) {
   const classes = toneClasses[tone];
 
   return (
-    <article
+    <Reveal
+      as="article"
+      index={index}
       className={cn(
-        "group relative flex min-h-72 flex-col justify-between rounded-card-lg p-card",
+        "group lift relative flex min-h-72 flex-col justify-between rounded-card-lg p-card",
         classes.card,
         href && "has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ink",
       )}
@@ -47,7 +52,11 @@ function ServiceCard({ tone, title, description, href, corner, children }: Servi
       <div className="flex items-start justify-between gap-4">
         {corner}
         {href && (
-          <span aria-hidden="true" className={cn("flex size-11 shrink-0 items-center justify-center rounded-full", classes.arrow)}>
+          <span aria-hidden="true" className={cn(
+              // Turns from a right arrow into an up-right arrow while the card is hovered.
+              "flex size-11 shrink-0 items-center justify-center rounded-full transition-[rotate] duration-300 motion-safe:group-hover:-rotate-45",
+              classes.arrow,
+            )}>
             <ArrowRightIcon size={18} />
           </span>
         )}
@@ -69,7 +78,7 @@ function ServiceCard({ tone, title, description, href, corner, children }: Servi
           {description}
         </Text>
       </div>
-    </article>
+    </Reveal>
   );
 }
 
@@ -82,17 +91,20 @@ export default function Services() {
 
   return (
     <section id="more" aria-labelledby="more-title" className="mx-auto max-w-7xl px-5 pt-section-xl pb-section-md md:px-8">
-      <Text variant="eyebrow" tone="accent">
-        {services.eyebrow}
-      </Text>
-      <Text variant="section" id="more-title" className="mt-2.5">
-        <span className="block">{services.title[0]}</span>{" "}
-        <span className="block">{services.title[1]}</span>
-      </Text>
+      <Reveal>
+        <Text variant="eyebrow" tone="accent">
+          {services.eyebrow}
+        </Text>
+        <Text variant="section" id="more-title" className="mt-2.5">
+          <span className="block">{services.title[0]}</span>{" "}
+          <span className="block">{services.title[1]}</span>
+        </Text>
+      </Reveal>
 
       <div className="mt-block grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
         <ServiceCard
           tone="accent"
+          index={0}
           title={airCargo.title}
           description={airCargo.description}
           href={airCargo.href}
@@ -109,6 +121,7 @@ export default function Services() {
 
         <ServiceCard
           tone="surface"
+          index={1}
           title={food.title}
           description={food.description}
           href={food.href}
@@ -129,6 +142,7 @@ export default function Services() {
 
         <ServiceCard
           tone="ink"
+          index={2}
           title={vehicle.title}
           description={vehicle.description}
           href={vehicle.href}
@@ -148,6 +162,7 @@ export default function Services() {
 
         <ServiceCard
           tone="muted"
+          index={3}
           title={customs.title}
           description={customs.description}
           href={customs.href}

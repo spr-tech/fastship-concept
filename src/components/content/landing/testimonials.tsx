@@ -1,4 +1,5 @@
 import { QuoteIcon } from "@/components/ui/icons/icons";
+import Reveal from "@/components/ui/reveal/reveal";
 import Text from "@/components/ui/typography/text";
 import { testimonials } from "@/data/testimonials";
 import { cn } from "@/utilities/helpers/cn";
@@ -20,15 +21,17 @@ const cardStyles = [
 export default function Testimonials() {
   return (
     <section aria-labelledby="testimonials-title" className="mx-auto max-w-7xl px-5 pt-section-sm pb-section-lg md:px-8">
-      <Text variant="section" id="testimonials-title">
-        {testimonials.title}
-      </Text>
+      <Reveal>
+        <Text variant="section" id="testimonials-title">
+          {testimonials.title}
+        </Text>
+      </Reveal>
 
       <div className="mt-10 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
         {testimonials.items.map((testimonial, index) => {
           const style = cardStyles[index % cardStyles.length];
           return (
-            <figure key={testimonial.name} className={cn("rounded-card-lg p-7", style.card)}>
+            <Reveal key={testimonial.name} as="figure" index={index} className={cn("lift rounded-card-lg p-7", style.card)}>
               <QuoteIcon size={32} className="text-accent" />
               <Text variant="quote" className="mt-4 mb-6">
                 {testimonial.quote}
@@ -45,7 +48,7 @@ export default function Testimonials() {
                   <span className={cn("text-small", style.location)}>{testimonial.location}</span>
                 </span>
               </figcaption>
-            </figure>
+            </Reveal>
           );
         })}
       </div>
