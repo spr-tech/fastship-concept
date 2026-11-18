@@ -66,7 +66,7 @@
   --text-display-closing--line-height: 0.98;
   --text-display-section: clamp(2rem, 3.7vw, 2.8125rem); /* 32–45px */
   --text-display-section--line-height: 1;
-  --text-display-contact: clamp(1.875rem, 3.08vw, 2.4375rem); /* 30–39px */
+  --text-display-contact: clamp(2rem, 2.9vw, 2.5rem); /* 32–40px */
   --text-display-contact--line-height: 0.95;
   --text-display-stat: clamp(3rem, 5.15vw, 4.25rem); /* 48–68px, the "24/7" */
   --text-display-stat--line-height: 0.9;
