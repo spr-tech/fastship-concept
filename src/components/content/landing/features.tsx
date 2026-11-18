@@ -1,10 +1,9 @@
 import Image from "next/image";
-import Button from "@/components/ui/button/button";
-import DesktopOnlyImage from "@/components/ui/image/desktopOnlyImage";
 import Reveal from "@/components/ui/reveal/reveal";
 import Text from "@/components/ui/typography/text";
 import { features } from "@/data/features";
 import { cn } from "@/utilities/helpers/cn";
+import SupportBanner from "./supportBanner";
 
 // One element per feature, restyled at 860px (the design's breakpoint): a compact row with an 88px
 // thumbnail on phones, a photo card on desktop. Rendering the two layouts separately and hiding one
@@ -95,32 +94,5 @@ export default function Features() {
         <SupportBanner />
       </div>
     </section>
-  );
-}
-
-function SupportBanner() {
-  const { support } = features;
-
-  return (
-    <Reveal as="article" className="group mt-3 flex flex-wrap overflow-hidden rounded-card bg-accent text-ink">
-      <div className="flex flex-[1_1_320px] flex-col justify-between gap-6 p-[clamp(1.5rem,3.2vw,2.5rem)]">
-        <Text variant="stat">{support.stat}</Text>
-        <div>
-          <Text variant="titleLg" className="mb-1.5">{support.title}</Text>
-          <p className="max-w-95 text-body font-medium">{support.description}</p>
-          <Button text={support.cta.label} href={support.cta.href} variant="dark" size="md" className="mt-4.5" />
-        </div>
-      </div>
-      {/* Desktop only, as in the design. DesktopOnlyImage stops phones downloading it at all. */}
-      <div className="relative min-h-56 flex-[1_1_360px] max-[860px]:hidden">
-        <DesktopOnlyImage
-          src={support.image.src}
-          alt={support.image.alt}
-          hiddenBelow="(width < 860px)"
-          sizes="(min-width: 1280px) 520px, 50vw"
-          className={photoZoom}
-        />
-      </div>
-    </Reveal>
   );
 }

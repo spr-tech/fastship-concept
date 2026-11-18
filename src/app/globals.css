@@ -70,6 +70,8 @@
   --text-display-contact--line-height: 0.95;
   --text-display-stat: clamp(3rem, 5vw, 4.125rem); /* 48–66px, the "24/7" */
   --text-display-stat--line-height: 0.9;
+  --text-display-outline: clamp(8rem, 17vw, 15rem); /* 128–240px, the outlined "24/7" behind the support banner. Decorative */
+  --text-display-outline--line-height: 0.8;
   --text-display-statement: clamp(1.25rem, 2vw, 1.625rem); /* 20–26px */
   --text-display-statement--line-height: 1.15;
   --text-display-sm: 1.625rem; /* 26px, "Track a shipment" */
@@ -626,4 +628,97 @@ html[data-nav] .site-header {
 html[data-nav="scrolled"] .site-header-bar::before {
   opacity: 1;
   scale: 1;
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Support chat (support banner). A 10s loop: the question appears, typing dots, then the reply,
+   and both clear before it starts again. The resting styles are the reduced-motion state: both
+   bubbles showing, no dots (animations are switched off there by the base layer).
+   --------------------------------------------------------------------------------------------- */
+@keyframes chat-question {
+  0% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  6%,
+  88% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    translate: 0 0;
+  }
+}
+
+@keyframes chat-typing {
+  0%,
+  12% {
+    opacity: 0;
+  }
+  16%,
+  34% {
+    opacity: 1;
+  }
+  38%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes chat-reply {
+  0%,
+  38% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  44%,
+  88% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  94%,
+  100% {
+    opacity: 0;
+    translate: 0 0;
+  }
+}
+
+@keyframes chat-dot {
+  0%,
+  60%,
+  100% {
+    translate: 0 0;
+  }
+  30% {
+    translate: 0 -3px;
+  }
+}
+
+.support-chat-typing {
+  opacity: 0;
+}
+
+.support-chat-question {
+  animation: chat-question 10s ease-out infinite;
+}
+
+.support-chat-typing {
+  animation: chat-typing 10s ease-out infinite;
+}
+
+.support-chat-reply {
+  animation: chat-reply 10s ease-out infinite;
+}
+
+.support-chat-dot {
+  animation: chat-dot 1s ease-in-out infinite;
+}
+
+/* Phones show only the reply, so it stays put instead of looping. */
+@media (max-width: 1023px) {
+  .support-chat-reply {
+    animation: none;
+  }
 }

@@ -14,6 +14,7 @@ const twMerge = extendTailwindMerge({
         "display-section",
         "display-contact",
         "display-stat",
+        "display-outline",
         "display-statement",
         "display-sm",
         "display-number",
