@@ -1,5 +1,6 @@
 import SiteFooter from "@/components/layouts/siteFooter";
 import SiteHeader from "@/components/layouts/siteHeader";
+import PointerEffects from "@/components/ui/pointerEffects/pointerEffects";
 import About from "./about";
 import CarrierBands from "./carrierBands";
 import ClosingCta from "./closingCta";
@@ -30,6 +31,8 @@ export default function LandingContent() {
         <ClosingCta />
       </main>
       <SiteFooter />
+      {/* One pointer listener for every card and the hero visual. */}
+      <PointerEffects />
     </>
   );
 }

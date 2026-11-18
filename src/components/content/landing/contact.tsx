@@ -23,7 +23,8 @@ const icons: Record<ContactIcon, ReactNode> = {
 function DetailRow({ detail }: { detail: ContactDetail }) {
   const content = (
     <>
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-field bg-ink-line text-accent-on-dark">
+      {/* On hover the square fills orange and tilts a little. */}
+      <span className="flex size-10 shrink-0 items-center justify-center rounded-field bg-ink-line text-accent-on-dark transition-[background-color,color,rotate] duration-300 ease-hover group-hover:bg-accent group-hover:text-ink motion-safe:group-hover:-rotate-6">
         {icons[detail.icon]}
       </span>
       <span className="flex min-w-0 flex-col gap-0.5">
@@ -32,17 +33,22 @@ function DetailRow({ detail }: { detail: ContactDetail }) {
       </span>
     </>
   );
-  const rowClasses = "flex items-center gap-3 border-t border-ink-line py-3";
+  const rowClasses = "flex items-center gap-3 border-t border-ink-line px-2 py-3";
 
   if (!detail.href) return <div className={rowClasses}>{content}</div>;
 
   return (
-    <a href={detail.href} className={`group ${rowClasses}`}>
+    <a href={detail.href} className={`group relative isolate ${rowClasses}`}>
+      {/* A highlight that slides in from the left behind the row while it's hovered. */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 origin-left scale-x-0 rounded-field bg-ink-raised transition-[scale] duration-350 ease-hover group-hover:scale-x-100"
+      />
       {content}
       {/* Slides right and turns orange while the row is hovered. */}
       <span
         aria-hidden="true"
-        className="ml-auto text-text-on-dark-subtle transition-[translate,color] duration-250 group-hover:text-accent-on-dark motion-safe:group-hover:translate-x-1"
+        className="ml-auto text-text-on-dark-subtle transition-[translate,color] duration-300 ease-hover group-hover:text-accent-on-dark motion-safe:group-hover:translate-x-1.5"
       >
         <ArrowRightIcon size={16} />
       </span>

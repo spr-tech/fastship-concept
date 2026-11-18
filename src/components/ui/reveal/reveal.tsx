@@ -11,6 +11,8 @@ type RevealProps = {
   /** Position among siblings that reveal together. Each step waits 90ms, up to 4 steps. */
   index?: number;
   id?: string;
+  /** Marks the element for PointerEffects, which feeds it the pointer position for hover effects. */
+  isPointerAware?: boolean;
   className?: string;
   children: ReactNode;
 };
@@ -33,7 +35,7 @@ function markPageReady() {
 }
 
 /** Fades its children in and up 32px the first time they scroll into view. Never hides them again. */
-export default function Reveal({ as: Tag = "div", index = 0, id, className, children }: RevealProps) {
+export default function Reveal({ as: Tag = "div", index = 0, id, isPointerAware = false, className, children }: RevealProps) {
   const { ref, isInView } = useInView<HTMLElement>();
   const [isDone, setIsDone] = useState(false);
   const delay = Math.min(index, MAX_STAGGER_STEPS) * STAGGER_MS;
@@ -56,6 +58,7 @@ export default function Reveal({ as: Tag = "div", index = 0, id, className, chil
     <Tag
       ref={ref as never}
       id={id}
+      data-pointer={isPointerAware ? "" : undefined}
       style={style}
       className={cn("reveal", isInView && "is-in", isDone && "is-done", className)}
     >
