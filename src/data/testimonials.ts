@@ -1,6 +1,7 @@
 import type { Testimonials } from "@/models/testimonials";
 
-// Fastship's own customer quotes, word for word as in the approved design.
+// Fastship's own customer quotes, kept as their customers wrote them. Only typos and the brand
+// name are fixed.
 export const testimonials: Testimonials = {
   title: "What our customers say",
   items: [
@@ -10,6 +11,13 @@ export const testimonials: Testimonials = {
       name: "Ade A.",
       initials: "AA",
       location: "Lagos",
+    },
+    {
+      quote:
+        "Sending parcels used to be a hassle, but with Fastship, it’s now effortless and smooth, fast and reliable.",
+      name: "Favour O.",
+      initials: "FO",
+      location: "Jos",
     },
     {
       quote:
