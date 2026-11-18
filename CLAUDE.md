@@ -73,12 +73,12 @@ One responsive page per route. Mobile designs are 390px wide; desktop 1440px.
 | --------------------------- | ----------- | --------------------------------------------------------------------- |
 | Concept banner              | —           | "Unofficial redesign concept by Muizz Jamiu · Not affiliated with Fastship.Africa". Always visible at the top. |
 | Header (floating glass nav) | —           | Sticky. See "Header".                                                 |
-| Hero                        | `#top`      | Two-line headline, intro, two CTAs, three checks, carrier comparison card |
+| Hero                        | `#top`      | Two-line headline, intro, two CTAs, three checks, layered hero visual (see "Hero visual") |
 | Carrier bands               | —           | Two tilted marquee bands                                              |
 | Track a shipment            | `#track`    | Disabled input, live button with notice                               |
 | About / problem             | `#about`    | Heading + courier photo (desktop only), three numbered cards, closing line |
 | How it works                | `#how`      | Four steps. Desktop: row with a horizontal wavy line. Mobile: centred column with vertical wavy connectors |
-| Features                    | —           | Dark section. Desktop: photo bento. Mobile: compact list rows. Then the 24/7 support banner (photo on desktop only) |
+| Features                    | —           | Dark section. Desktop: photo bento. Mobile: compact list rows. Then the 24/7 support banner: one dark card, photo in the right two-thirds fading into it (on top, fading down, on phones), outlined "24/7" behind, "Talk to support" plus glass WhatsApp/Email/Call buttons, an aria-hidden looping support chat over the photo |
 | Not a business?             | `#more`     | Four cards: air cargo, send food home, vehicle import, customs help   |
 | Testimonials                | —           | Fastship's own customer quotes                                        |
 | FAQ                         | `#faq`      | Accordion, six real questions and answers                             |
@@ -120,6 +120,7 @@ src/
 │   │   ├── field/                 # input.tsx, select.tsx, textarea.tsx, fieldLabel.tsx
 │   │   ├── notice/demoNotice.tsx  # The "this is a concept" message
 │   │   ├── reveal/reveal.tsx      # Scroll reveal wrapper (client)
+│   │   ├── pointerEffects/        # Page-wide pointer position for hover effects (client)
 │   │   ├── marquee/marquee.tsx
 │   │   ├── accordion/accordion.tsx
 │   │   ├── icons/icons.tsx
@@ -129,11 +130,12 @@ src/
 │   │   ├── conceptBanner.tsx
 │   │   ├── siteHeader.tsx         # Desktop glass nav
 │   │   ├── mobileMenu.tsx         # Client: menu, backdrop, scroll lock
+│   │   ├── navScrollState.tsx     # Client: flat at the top / glass bar once scrolled
 │   │   ├── siteFooter.tsx
 │   │   └── authLayout.tsx         # Form left, pinned brand panel right
 │   │
 │   └── content/
-│       ├── landing/               # One file per section, plus illustrations/
+│       ├── landing/               # One file per section, plus illustrations/ and heroVisual/
 │       └── auth/                  # signInForm.tsx, signUpForm.tsx, panels
 │
 ├── data/                          # All copy, typed
@@ -158,8 +160,11 @@ Rules:
 - `ui/` never imports from `content/` or `data/`. Pass things in as props.
 - Copy lives in `src/data/`, never hard-coded in components.
 - Server Components by default. `"use client"` only for: the mobile menu, the FAQ accordion, the
-  reveal wrapper, the track/contact/auth notice buttons, and the password show/hide toggle.
-  Keep client components small and at the leaves.
+  reveal wrapper, the track/contact/auth notice buttons, the password show/hide toggle, the nav
+  scroll marker (`layouts/navScrollState.tsx`), the page-wide pointer listener
+  (`ui/pointerEffects/pointerEffects.tsx`) and the hero visual's loop driver
+  (`landing/heroVisual/heroVisualMotion.tsx`). Keep client components small and at the leaves:
+  the last three only set CSS variables or a data attribute and render nothing heavy.
 - Images are static imports from `src/assets/images/`, so `next/image` gets width and height at
   build time. Give every `next/image` a correct `sizes`.
 
@@ -263,6 +268,8 @@ who set larger text in their browser.
 | `body`                     | 15px                 | Body text. Never smaller                       |
 | `small`                    | 14px                 | Nav links, buttons, notices, secondary lines   |
 | `label`                    | 13px                 | Labels, badges, small print. Never smaller     |
+| `mock`                     | 11px                 | Only the hero visual's aria-hidden interface text. Never real content |
+| `display-outline`          | 128–240px            | The outlined "24/7" behind the support banner. Decorative |
 
 `cn()` registers these names with tailwind-merge. Add any new token there too, or a colour class
 will silently delete the size.
@@ -285,11 +292,19 @@ will silently delete the size.
 
 ## Header
 
-- **Desktop:** a floating, frosted-glass bar, sticky 10px from the top: semi-transparent white,
-  backdrop blur, a hairline border and a soft shadow, fully rounded. Logo left, seven links centred,
-  outlined "Log in" and solid dark "Sign up" with an arrow on the right. The active link is darker
-  and bolder, with no coloured pill.
-- **Mobile:** the same floating bar with the logo and a round dark menu button.
+- **At the top of the page** (the first 20px): flat and full width, with no background, border or
+  shadow. Logo on the left, seven links centred, outlined "Log in" and solid dark "Sign up" with an
+  arrow on the right, all on the page's content edges. The active link is darker and bolder, with
+  no coloured pill.
+- **Once scrolled:** a frosted-glass bar fades in behind the same content, pulled in from the edges
+  and sitting 8px below the top: semi-transparent white, backdrop blur, hairline border, soft
+  shadow, fully rounded. Scrolling back to the top flattens it again. The glass is its own layer
+  (`.site-header-bar::before`), so nothing inside moves and nothing shifts. 450ms ease-out;
+  instant under reduced motion.
+- `NavScrollState` watches a 20px marker at the top of the page with an IntersectionObserver (never
+  a scroll listener) and sets `data-nav="top"` or `"scrolled"` on `<html>`. The header is sticky only
+  once that attribute exists, so without JavaScript it is a plain flat bar that scrolls away.
+- **Mobile:** the same idea, with the logo and a round dark menu button.
 - **Mobile menu:** a dark panel dropping below the bar with all links, then Log in and Sign up.
   While it's open, the page behind is darkened and blurred, and page scrolling is locked. Tapping
   the backdrop, a link, or the close button closes it. Escape closes it too. Focus moves into the
@@ -337,16 +352,49 @@ Lively but professional. Every animation must have a reason, and all of them sto
 | Where                    | What                                                                 |
 | ------------------------ | -------------------------------------------------------------------- |
 | Hero headline            | Each line rises from below its own clipping box, staggered           |
-| Hero intro and card      | Fade up, staggered after the headline                                |
-| Comparison card          | Plane icon flies along the dashed route; carrier rows fade in one by one; shimmer on the placeholder bars |
+| Hero intro and visual    | Fade up, staggered after the headline                                |
+| Hero visual              | See "Hero visual" below                                              |
 | "Demo available" pill    | Pulsing dot                                                          |
 | Carrier bands            | Two tilted marquees moving in opposite directions                    |
 | Scroll reveal            | Sections and cards fade in and rise 32px once, the first time they come into view (about 0.8s). Siblings stagger by about 90ms. They never fade out again when scrolling up |
 | How it works             | The connecting line draws itself in                                  |
-| Cards                    | Lift on hover; feature photos zoom to about 104%                     |
-| Buttons and links        | Small lift on hover; contact row arrows slide right                  |
+| Service, testimonial cards | On hover: a spotlight follows the pointer, the card tilts up to 3° towards it and lifts 8px with a soft shadow. Services: illustration zooms, arrow turns 45°, food photos zoom one after another, frosted details panel slides up. Testimonials: card straightens to 0°, quote mark scales and twists, avatar gets an orange ring |
+| "Not a business?" cards  | Desktop: the section pins (180vh) and the cards spread from a fanned stack (-6°, -2°, 2°, 6°, Air cargo on top) into their row between 15% and 75% of the scroll, then hold. Scroll-driven CSS, translate and rotate only |
+| Feature photos           | Zoom to about 104% on hover                                          |
+| Contact rows             | Highlight slides in from the left, icon square fills orange and tilts, arrow slides right |
+| Buttons and links        | Small lift on hover                                                  |
 | FAQ                      | Answer fades in; plus icon rotates to a cross                        |
+| Support banner           | Pulsing eyebrow dot; the chat loops: question, typing dots, reply (reply only, static, on phones) |
+| Header                   | Glass bar fades in behind the nav once scrolled                      |
 | Mobile menu              | Panel fades up; backdrop fades in                                    |
+
+Hover effects only run on devices that can really hover (`(hover: hover) and (pointer: fine)`),
+ease out over 250–400ms with nothing bouncy (`--ease-hover`), and are all off under reduced motion.
+`PointerEffects` gives any `[data-pointer]` element `--pointer-x/y` (percent) and `--pointer-dx/dy`
+(-1 to 1); the effects themselves are CSS in `globals.css` (`.pointer-card`).
+
+### Hero visual
+
+A layered composition built in code (`src/components/content/landing/heroVisual/`), no images except
+the real logo file cropped to its mark. Copy is in `src/data/hero.ts`. No prices, counts or stats.
+
+- Back: a dark dashboard window (sidebar with the mark and four icons, "Shipments" with a search
+  field, filter tabs, a route strip with an orange plane flying one route, three shipment rows whose
+  status pills and progress bars step Booked → Picked up → In transit → Delivered, one row at a time).
+- Front left (desktop only): a phone tracking LOS → LHR; its timeline fills step by step with a
+  pulsing dot on the current step.
+- Front right: a frosted "Compare carriers" card, the five carriers with shimmering placeholder bars
+  (no service tiers), a highlight moving carrier to carrier and a "Book with …" button that follows.
+- Two frosted chips with real benefits ("Doorstep pickup", "Full insurance"), desktop only.
+- Each layer floats on its own loop; on desktop with a pointer the layers drift towards it by
+  different amounts and the dashboard tilts a little.
+- `HeroVisualMotion` drives the loops by setting CSS variables (no re-renders) and pauses off
+  screen. Server-rendered resting state = reduced-motion state: one row in transit, one delivered,
+  timeline at "Arrived London", DHL highlighted.
+- One `figcaption` describes it for screen readers; everything drawn is `aria-hidden`.
+- Phones: the dashboard and the compare card only, no pointer movement, and no backdrop blur (the
+  compare card is near-solid instead), since blur could not be tested for scroll jank on a real
+  mid-range phone. The headline must stay the LCP element.
 
 Implementation rules:
 
@@ -354,9 +402,15 @@ Implementation rules:
   Content must be visible if JavaScript hasn't run: hide elements only after the hook has set a
   "ready" flag on the page.
 - Reveal and hover lifts use the CSS `translate` property, not `transform`, so they don't fight
-  with cards that are rotated with `rotate`.
-- Do not use scroll-linked (`animation-timeline: view()`) animations. They leave content
-  half-faded when the user stops scrolling, which was rejected in review.
+  with cards that are rotated with `rotate`. `transform` is only for the 3D pointer tilt and the
+  hero layers' pointer drift, which sit alongside `translate` and `rotate` without replacing them.
+  When two motions would both need `translate` (the service stack and the card's hover lift), put
+  them on different elements.
+- Scroll-linked (`animation-timeline`) animations are allowed for position and rotation only
+  (`translate`, `rotate`), never opacity: scroll-linked fades leave content half-faded when the
+  user stops scrolling, which was rejected in review. Use them inside
+  `@supports (animation-timeline: view())` and `prefers-reduced-motion: no-preference`, so other
+  browsers and reduced motion get the plain layout.
 - Animate only `opacity`, `translate`, `scale`, `rotate` and colours. Never anything that causes
   layout shift.
 
@@ -453,7 +507,7 @@ The guide is written for a data-heavy app. This site has no backend, so:
 | Copy inside a component             | Belongs in `src/data/`                                  |
 | An enabled form input               | Every field in this concept is disabled                 |
 | `<form action`, `fetch(`, `cookies(`, analytics or tag scripts | This demo never collects, stores or sends data |
-| `animation-timeline`                | Scroll-linked fades were rejected                       |
-| `transform` in a reveal or hover    | Use `translate` so rotated cards keep their tilt        |
+| `animation-timeline` with `opacity` | Scroll-linked fades were rejected; position and rotation only |
+| `transform` in a reveal or hover lift | Use `translate` so rotated cards keep their tilt (3D pointer tilt is the exception) |
 | Animation without reduced-motion handling | Ignores users who turned motion off               |
 | `: any`                             | A type nobody finished                                  |
