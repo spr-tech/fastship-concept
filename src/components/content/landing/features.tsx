@@ -1,19 +1,16 @@
 import Image from "next/image";
 import Reveal from "@/components/ui/reveal/reveal";
+import SnapCarousel from "@/components/ui/snapCarousel/snapCarousel";
 import Text from "@/components/ui/typography/text";
 import { features } from "@/data/features";
 import { cn } from "@/utilities/helpers/cn";
 import SupportBanner from "./supportBanner";
 
-// One element per feature, restyled at 860px (the design's breakpoint): a compact row with an 88px
-// thumbnail on phones, a photo card on desktop. Rendering the two layouts separately and hiding one
-// made phones download every desktop photo, then reuse those big files for the thumbnails.
-// The last value in each sizes list is the phone thumbnail: 148px, because the 5:3 photos are
-// cropped to a square, so an 88px-tall crop needs about 148px of width. Desktop widths are in px, not
-// vw: with a vw value Next drops every srcset width below 640 x that share, which took the
-// thumbnail candidates out of the srcset.
-const WIDE_SIZES = "(min-width: 860px) 800px, 148px";
-const CARD_SIZES = "(min-width: 860px) 400px, 148px";
+// One element per feature, restyled at lg: a swipeable card on phones and tablets (photo on top,
+// text below), a photo card in the bento on desktop. Rendering the two layouts separately and hiding
+// one made phones download every desktop photo, so it is one image per feature with sizes for both.
+const WIDE_SIZES = "(min-width: 1024px) 800px, 82vw";
+const CARD_SIZES = "(min-width: 1024px) 400px, 82vw";
 
 // Photos zoom to 104% while their card is hovered.
 const photoZoom =
@@ -46,7 +43,17 @@ export default function Features() {
           </Text>
         </Reveal>
 
-        <ul className="mt-block flex flex-col gap-2 min-[860px]:grid min-[860px]:grid-cols-3 min-[860px]:gap-3">
+        {/* Below lg: a row of cards that scrolls sideways and snaps, bleeding to the screen edges, with
+            dots under it. From lg: the photo bento, and the dots are hidden. */}
+        <SnapCarousel
+          label={features.carousel.label}
+          hint={features.carousel.hint}
+          dotLabels={features.items.map((feature) => `${features.carousel.dotLabel} ${feature.title}`)}
+          activeQuery="(max-width: 1023.98px)"
+          scrollerClassName="mt-block -mx-5 snap-x snap-mandatory overflow-x-auto scroll-px-5 px-5 pb-1 [scrollbar-width:none] md:-mx-8 md:scroll-px-8 md:px-8 lg:mx-0 lg:overflow-visible lg:px-0 lg:pb-0"
+          listClassName="flex gap-3 lg:grid lg:grid-cols-3"
+          controlsClassName="lg:hidden"
+        >
           {features.items.map((feature, index) => {
             const isWide = index === 0;
             return (
@@ -55,41 +62,41 @@ export default function Features() {
                 as="li"
                 index={index}
                 className={cn(
-                  "group relative isolate flex items-center gap-3.5 overflow-hidden rounded-card-sm bg-ink-raised py-2 pr-3 pl-2",
-                  "min-[860px]:flex-col min-[860px]:items-stretch min-[860px]:justify-end min-[860px]:gap-0 min-[860px]:rounded-card min-[860px]:p-0",
-                  isWide && "min-[860px]:col-span-2",
-                  index < 2 ? "min-[860px]:min-h-76" : "min-[860px]:min-h-68",
+                  "group relative isolate flex w-[82vw] max-w-md shrink-0 snap-start flex-col overflow-hidden rounded-card bg-ink-raised",
+                  "lg:w-auto lg:max-w-none lg:justify-end",
+                  isWide && "lg:col-span-2",
+                  index < 2 ? "lg:min-h-76" : "lg:min-h-68",
                 )}
               >
-                <div className="relative size-20 shrink-0 overflow-hidden rounded-field min-[860px]:absolute min-[860px]:inset-0 min-[860px]:-z-20 min-[860px]:size-auto min-[860px]:rounded-none">
+                <div className="relative aspect-16/10 w-full shrink-0 overflow-hidden lg:absolute lg:inset-0 lg:-z-20 lg:aspect-auto">
                   <Image
                     src={feature.image.src}
                     alt={feature.image.alt}
                     fill
                     sizes={isWide ? WIDE_SIZES : CARD_SIZES}
+                    // Only the first photo loads straight away; the rest wait until they're near the screen.
+                    loading={index === 0 ? "eager" : "lazy"}
                     className={photoZoom}
                   />
                 </div>
                 {/* Darkens the bottom of the photo so the text on it stays readable. Desktop only. */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 -z-10 hidden bg-linear-to-b from-ink/0 from-25% via-ink/75 via-60% to-ink/95 min-[860px]:block"
+                  className="absolute inset-0 -z-10 hidden bg-linear-to-b from-ink/0 from-25% via-ink/75 via-60% to-ink/95 lg:block"
                 />
-                <div className="min-w-0 min-[860px]:p-5.5">
-                  <span aria-hidden="true" className="text-[11px] font-bold tracking-[0.08em] text-accent-on-dark min-[860px]:text-xs">
+                <div className="min-w-0 p-4.5 lg:p-5.5">
+                  <span aria-hidden="true" className="text-label font-bold tracking-[0.08em] text-accent-on-dark">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-0.5 mb-1 text-lead leading-tight font-bold min-[860px]:my-1 min-[860px]:text-title">
-                    {feature.title}
-                  </h3>
-                  <p className="text-body leading-snug text-text-on-dark-muted min-[860px]:max-w-100 min-[860px]:text-text-on-dark">
+                  <h3 className="mt-1 mb-1 text-title-sm leading-tight font-bold lg:text-title">{feature.title}</h3>
+                  <p className="text-body leading-snug text-text-on-dark-muted lg:max-w-100 lg:text-text-on-dark">
                     {feature.description}
                   </p>
                 </div>
               </Reveal>
             );
           })}
-        </ul>
+        </SnapCarousel>
 
         <SupportBanner />
       </div>

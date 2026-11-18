@@ -11,6 +11,11 @@ import { conceptLinks, fastshipLinks } from "./links";
 // would only repeat the heading to screen reader users.
 export const features: Features = {
   title: ["Everything you need,", "in one platform"],
+  carousel: {
+    label: "Platform features",
+    dotLabel: "Show",
+    hint: "Swipe to see more",
+  },
   items: [
     {
       title: "Multi-carrier integration",

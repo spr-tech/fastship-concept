@@ -31,5 +31,13 @@ export type Support = {
 export type Features = {
   title: TwoLineHeading;
   items: Feature[];
+  /** The swipeable card row on phones and tablets. */
+  carousel: {
+    /** Names the scroll area for screen readers. */
+    label: string;
+    /** Start of each dot's label, followed by the card's title, e.g. "Show Automated workflows". */
+    dotLabel: string;
+    hint: string;
+  };
   support: Support;
 };
