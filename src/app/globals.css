@@ -447,7 +447,9 @@
       position: sticky;
       top: 4.5rem;
       display: flex;
-      height: calc(100vh - 4.5rem);
+      /* Shorter than the space under the header, because the section's top padding (88px) is
+         larger than the 72px pin offset at the moment the stack starts. */
+      height: calc(100vh - 6rem);
       flex-direction: column;
       justify-content: center;
     }

@@ -18,6 +18,11 @@ export const services: Services = {
     illustrationLabel: "Illustration: air cargo routes from Lagos to London, Dubai and New York",
     origin: "LOS",
     destinations: ["LHR", "DXB", "JFK"],
+    details: {
+      title: "Consolidated air cargo",
+      text: "Shared space on airlines from and to Nigeria, with a tracking ID issued instantly.",
+      link: { label: "Ship by air", href: fastshipLinks.shipping },
+    },
   },
   food: {
     kicker: "To the UK",
@@ -35,6 +40,10 @@ export const services: Services = {
       { label: "Spices", image: { src: spices, alt: "" } },
       { label: "Snacks", image: { src: snacks, alt: "" } },
     ],
+    details: {
+      title: "Dried foods welcome",
+      text: "Palm oil, garri, yam flour, egusi, spices and snacks, packed for the trip to the UK.",
+    },
   },
   vehicle: {
     title: "Vehicle import",
@@ -43,6 +52,11 @@ export const services: Services = {
     illustrationLabel: "Illustration: a car shipped by container vessel to Lagos",
     destination: "Lagos",
     steps: ["Source", "Ship", "Clear customs", "Deliver"],
+    details: {
+      title: "Cars, trucks and equipment",
+      text: "Get a quick quote estimate online, then track your vehicle at every stage.",
+      link: { label: "Get a quote", href: fastshipLinks.carImport },
+    },
   },
   customs: {
     title: "Customs help",
@@ -52,5 +66,10 @@ export const services: Services = {
     documentCode: "HS 0904.11",
     stamp: "CLEARED",
     topics: ["Shipping guides", "HS code lookup", "FAQs"],
+    details: {
+      title: "Know before you ship",
+      text: "Look up the HS code for your item and check what’s restricted before you book.",
+      link: { label: "Open the guides", href: fastshipLinks.guides },
+    },
   },
 };
