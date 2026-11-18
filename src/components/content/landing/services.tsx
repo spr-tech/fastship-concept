@@ -14,34 +14,35 @@ import VehicleImportIllustration from "./illustrations/vehicleImportIllustration
 type CardTone = "accent" | "surface" | "ink" | "muted";
 
 // --spot is the hover spotlight's colour. The details panel is dark glass on the light cards and
-// light glass on the dark one.
+// light glass on the dark one. Phones get no blur (it is costly to render there), so the panel is
+// a little more solid instead.
 const toneClasses: Record<CardTone, { card: string; description: string; arrow: string; details: string; detailsLink: string }> = {
   accent: {
     card: "bg-accent text-ink [--spot:color-mix(in_oklab,var(--surface)_30%,transparent)]",
     description: "font-medium",
     arrow: "bg-ink text-text-on-dark",
-    details: "bg-ink/80 text-text-on-dark",
+    details: "bg-ink/90 text-text-on-dark lg:bg-ink/80",
     detailsLink: "text-accent-on-dark",
   },
   surface: {
     card: "border border-border bg-surface text-ink [--spot:color-mix(in_oklab,var(--accent-subtle)_55%,transparent)]",
     description: "text-text-body",
     arrow: "bg-ink text-text-on-dark",
-    details: "bg-ink/80 text-text-on-dark",
+    details: "bg-ink/90 text-text-on-dark lg:bg-ink/80",
     detailsLink: "text-accent-on-dark",
   },
   ink: {
     card: "bg-ink text-text-on-dark [--spot:color-mix(in_oklab,var(--surface)_12%,transparent)]",
     description: "text-text-on-dark-muted",
     arrow: "bg-accent text-ink",
-    details: "bg-surface/85 text-ink",
+    details: "bg-surface/95 text-ink lg:bg-surface/85",
     detailsLink: "text-accent-text",
   },
   muted: {
     card: "bg-surface-muted text-ink [--spot:color-mix(in_oklab,var(--surface)_55%,transparent)]",
     description: "text-text-body",
     arrow: "bg-ink text-text-on-dark",
-    details: "bg-ink/80 text-text-on-dark",
+    details: "bg-ink/90 text-text-on-dark lg:bg-ink/80",
     detailsLink: "text-accent-on-dark",
   },
 };
@@ -113,7 +114,7 @@ function ServiceCard({ tone, index, title, description, details, href, corner, c
       </div>
 
       {/* Inside the card on phones; slides up over the lower part on desktop hover (see globals.css). */}
-      <div className={cn("service-details relative z-2 mt-4 rounded-field p-4 backdrop-blur-md lg:p-5", classes.details)}>
+      <div className={cn("service-details relative z-2 mt-4 rounded-field p-4 lg:p-5 lg:backdrop-blur-md", classes.details)}>
         <p className="text-small font-bold">{details.title}</p>
         <p className="mt-1 text-small opacity-85">{details.text}</p>
         {details.link && (

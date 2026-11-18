@@ -74,8 +74,8 @@ export default function Features() {
                     alt={feature.image.alt}
                     fill
                     sizes={isWide ? WIDE_SIZES : CARD_SIZES}
-                    // Only the first photo loads straight away; the rest wait until they're near the screen.
-                    loading={index === 0 ? "eager" : "lazy"}
+                    // All lazy, the first card included: the section is well below the first screen, and an
+                    // eager photo here was fetched alongside the fonts and CSS, slowing the first paint.
                     className={photoZoom}
                   />
                 </div>

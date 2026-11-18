@@ -31,7 +31,7 @@ function SupportChat({ question, agent, reply }: { question: string; agent: stri
           <span className="support-chat-dot size-1.5 rounded-full bg-ink/60 [animation-delay:150ms]" />
           <span className="support-chat-dot size-1.5 rounded-full bg-ink/60 [animation-delay:300ms]" />
         </span>
-        <p className="support-chat-reply col-start-1 row-start-1 rounded-2xl rounded-bl-md bg-surface/85 px-3.5 py-2.5 text-ink shadow-card backdrop-blur-md">
+        <p className="support-chat-reply col-start-1 row-start-1 rounded-2xl rounded-bl-md bg-surface/95 px-3.5 py-2.5 text-ink shadow-card lg:bg-surface/85 lg:backdrop-blur-md">
           <span className="block text-label font-bold text-accent-text">{agent}</span>
           <span className="mt-0.5 block text-small">{reply}</span>
         </p>

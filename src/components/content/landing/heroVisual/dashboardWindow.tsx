@@ -23,42 +23,48 @@ const pins = [
 const routePath = (pin: { x: number; y: number }) =>
   `M${ORIGIN.x} ${ORIGIN.y} Q ${(ORIGIN.x + pin.x) / 2} ${Math.min(ORIGIN.y, pin.y) - 34} ${pin.x} ${pin.y}`;
 
+/** Drawn around (0, 0), pointing right. */
 function Plane() {
   return <path d="M-8 -1.6 3 -1.6 8 0 3 1.6-8 1.6ZM-1 -1.6-5 -7-2.5 -7 3 -1.6ZM-1 1.6-5 7-2.5 7 3 1.6Z" className="fill-accent" />;
 }
 
+/**
+ * The routes, drawn in a box with the SVG's exact proportions (320 by 84), so a percentage of the box
+ * is the same point on the drawing at any size. That lets the plane fly in CSS: .route-plane moves
+ * with translate and .route-plane-turn turns with rotate, along keyframes sampled from the first
+ * route (see globals.css). Both run on the compositor; SVG's own animateMotion repainted the whole
+ * drawing on the main thread every frame. Under reduced motion the plane rests mid-route.
+ */
 function RouteStrip({ origin, destinations }: { origin: string; destinations: string[] }) {
-  const firstRoute = routePath(pins[0]!);
   return (
-    <svg viewBox="0 0 320 84" className="block h-full w-full" preserveAspectRatio="xMidYMid meet" focusable="false">
-      <g fill="none" strokeWidth="1.5" strokeDasharray="4 5" strokeLinecap="round" className="stroke-text-on-dark-subtle">
-        {pins.map((pin, index) => (
-          <path key={pin.x} d={routePath(pin)} strokeOpacity={index === 0 ? 0.75 : 0.35} />
-        ))}
-      </g>
-      {pins.map((pin, index) => (
-        <g key={pin.x}>
-          <circle cx={pin.x} cy={pin.y} r="3.5" className="fill-text-on-dark" />
-          <text x={pin.x} y={pin.y + 14} textAnchor="middle" className="fill-text-on-dark-subtle text-[9px] font-semibold">
-            {destinations[index]}
-          </text>
+    <div className="relative mx-auto aspect-[320/84] h-full max-w-full">
+      <svg viewBox="0 0 320 84" className="block size-full" focusable="false">
+        <g fill="none" strokeWidth="1.5" strokeDasharray="4 5" strokeLinecap="round" className="stroke-text-on-dark-subtle">
+          {pins.map((pin, index) => (
+            <path key={pin.x} d={routePath(pin)} strokeOpacity={index === 0 ? 0.75 : 0.35} />
+          ))}
         </g>
-      ))}
-      <circle cx={ORIGIN.x} cy={ORIGIN.y} r="5" className="fill-accent" />
-      <text x={ORIGIN.x} y={ORIGIN.y + 15} textAnchor="middle" className="fill-accent-on-dark text-[9px] font-bold">
-        {origin}
-      </text>
-
-      {/* SVG's own animateMotion keeps the plane on the line at any size. CSS can't pause it, so
-          under reduced motion this plane is hidden and a resting one is shown instead. */}
-      <g className="motion-reduce:hidden">
-        <animateMotion path={firstRoute} dur="3.6s" repeatCount="indefinite" rotate="auto" calcMode="spline" keyTimes="0;1" keyPoints="0;1" keySplines="0.45 0 0.55 1" />
-        <Plane />
-      </g>
-      <g transform="translate(92 34) rotate(-28)" className="motion-safe:hidden">
-        <Plane />
-      </g>
-    </svg>
+        {pins.map((pin, index) => (
+          <g key={pin.x}>
+            <circle cx={pin.x} cy={pin.y} r="3.5" className="fill-text-on-dark" />
+            <text x={pin.x} y={pin.y + 14} textAnchor="middle" className="fill-text-on-dark-subtle text-[9px] font-semibold">
+              {destinations[index]}
+            </text>
+          </g>
+        ))}
+        <circle cx={ORIGIN.x} cy={ORIGIN.y} r="5" className="fill-accent" />
+        <text x={ORIGIN.x} y={ORIGIN.y + 15} textAnchor="middle" className="fill-accent-on-dark text-[9px] font-bold">
+          {origin}
+        </text>
+      </svg>
+      <span className="route-plane absolute inset-0">
+        <span className="route-plane-turn absolute top-0 left-0 -mt-2 -ml-2 size-4">
+          <svg viewBox="-8 -8 16 16" className="block size-full" focusable="false">
+            <Plane />
+          </svg>
+        </span>
+      </span>
+    </div>
   );
 }
 
@@ -122,7 +128,7 @@ export default function DashboardWindow({ dashboard }: { dashboard: HeroVisual["
           ))}
         </div>
 
-        <div className="mt-2.5 h-18 rounded-field bg-ink-raised lg:h-20">
+        <div className="mt-2.5 h-16 overflow-hidden rounded-field bg-ink-raised lg:h-20">
           <RouteStrip origin={dashboard.origin} destinations={dashboard.shipments.map((shipment) => shipment.to)} />
         </div>
 
