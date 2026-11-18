@@ -358,7 +358,8 @@ Lively but professional. Every animation must have a reason, and all of them sto
 | Where                    | What                                                                 |
 | ------------------------ | -------------------------------------------------------------------- |
 | Hero headline            | Each line rises from below its own clipping box, staggered           |
-| Hero intro and visual    | Fade up, staggered after the headline                                |
+| Hero intro               | Rises 24px after the headline, without fading: it is the LCP element on phones, and text starting at opacity 0 delays LCP |
+| Hero visual (entrance)   | Fades up, staggered after the intro                                  |
 | Hero visual              | See "Hero visual" below                                              |
 | "Demo available" pill    | Pulsing dot                                                          |
 | Carrier bands            | Two tilted marquees moving in opposite directions                    |
@@ -458,6 +459,13 @@ Target: Lighthouse 95+ on mobile for Performance, Accessibility, Best Practices 
 - The hero has no large photo, so keep the LCP (Largest Contentful Paint) element as text.
 - Fonts through `next/font`, so there's no layout shift.
 - Keep client JavaScript small. No library for animation.
+- Looping animations must run on the compositor, or they keep a phone's main thread busy forever
+  (measured: 98% busy at idle before part 12). So: no SVG `<animate>`/`animateMotion` (fly things
+  with `translate`/`rotate` keyframes instead, see `.route-plane`), and never animate an `<svg>`
+  element itself: wrap it in a `<span>` and animate that.
+- No `backdrop-filter` below lg: it is costly to render on phones. Use a more solid fill there, and
+  only switch a blur on while its layer is actually visible (the header).
+- Nothing below the first screen loads eagerly.
 - Semantic landmarks: `header`, `nav`, `main`, `footer`, one `h1`.
 - Visible focus rings on every interactive element. Full keyboard use, including the mobile menu
   and the FAQ.
@@ -515,6 +523,8 @@ The guide is written for a data-heavy app. This site has no backend, so:
 | An enabled form input               | Every field in this concept is disabled                 |
 | `<form action`, `fetch(`, `cookies(`, analytics or tag scripts | This demo never collects, stores or sends data |
 | `animation-timeline` with `opacity` | Scroll-linked fades were rejected; position and rotation only |
+| `<animateMotion`, `<animate`        | SMIL repaints on the main thread every frame            |
+| `animate-` or `backdrop-blur` on an `<svg>` / below lg | Not composited, or too costly on phones |
 | `transform` in a reveal or hover lift | Use `translate` so rotated cards keep their tilt (3D pointer tilt is the exception) |
 | Animation without reduced-motion handling | Ignores users who turned motion off               |
 | `: any`                             | A type nobody finished                                  |
