@@ -315,6 +315,11 @@ will silently delete the size.
   While it's open, the page behind is darkened and blurred, and page scrolling is locked. Tapping
   the backdrop, a link, or the close button closes it. Escape closes it too. Focus moves into the
   menu when it opens and back to the button when it closes.
+  The backdrop and the panel are portaled to `<body>` as fixed layers (the panel's top is measured
+  from the bar on open), so nothing on the sticky glass bar can trap or clip them. The scroll lock
+  sets `overflow: hidden` on `<html>` only: setting it on `<body>` too makes `<body>` a scroll
+  container at 0, the sticky header jumps to the top of the document, and the menu opens off-screen
+  once the page has scrolled.
 
 ---
 
