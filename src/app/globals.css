@@ -58,17 +58,17 @@
    still grow when someone raises their browser's text size. Never scale the root font size. */
 @theme {
   /* Anton display sizes. The clamp minimum is the phone size, the maximum the desktop size. */
-  --text-display-hero: clamp(2.5rem, 5.2vw, 4.5rem); /* 40–72px */
+  --text-display-hero: clamp(2.5rem, 5.35vw, 4.625rem); /* 40–74px */
   --text-display-hero--line-height: 0.95;
-  --text-display-auth: clamp(2.5rem, 4.2vw, 3.5rem); /* 40–56px */
+  --text-display-auth: clamp(2.5rem, 4.32vw, 3.625rem); /* 40–58px */
   --text-display-auth--line-height: 0.95;
-  --text-display-closing: clamp(2.25rem, 4vw, 3.25rem); /* 36–52px */
+  --text-display-closing: clamp(2.25rem, 4.1vw, 3.3125rem); /* 36–53px */
   --text-display-closing--line-height: 0.98;
-  --text-display-section: clamp(2rem, 3.6vw, 2.75rem); /* 32–44px */
+  --text-display-section: clamp(2rem, 3.7vw, 2.8125rem); /* 32–45px */
   --text-display-section--line-height: 1;
-  --text-display-contact: clamp(1.875rem, 3vw, 2.375rem); /* 30–38px */
+  --text-display-contact: clamp(1.875rem, 3.08vw, 2.4375rem); /* 30–39px */
   --text-display-contact--line-height: 0.95;
-  --text-display-stat: clamp(3rem, 5vw, 4.125rem); /* 48–66px, the "24/7" */
+  --text-display-stat: clamp(3rem, 5.15vw, 4.25rem); /* 48–68px, the "24/7" */
   --text-display-stat--line-height: 0.9;
   --text-display-outline: clamp(8rem, 17vw, 15rem); /* 128–240px, the outlined "24/7" behind the support banner. Decorative */
   --text-display-outline--line-height: 0.8;
