@@ -331,3 +331,31 @@
     translate: none !important;
   }
 }
+
+/* Lines that draw themselves in when their reveal comes into view (How it works). pathLength="1"
+   on the path makes one dash exactly the line's length at any width, so the same offset hides it. */
+.draw-line {
+  --draw-length: 1;
+  stroke-dasharray: 1;
+}
+
+[data-reveal="ready"] .reveal:not(.is-in) .draw-line {
+  stroke-dashoffset: 1;
+}
+
+.reveal.is-in .draw-line {
+  animation: var(--animate-draw);
+  animation-duration: var(--draw-duration, 2.4s);
+}
+
+/* Cards lifting 6px on hover. Only on devices that can really hover, so a tap on a phone doesn't
+   leave a card stuck in the air. Uses translate, so a card's rotate tilt is kept. */
+@utility lift {
+  transition: translate 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:hover {
+      translate: 0 -6px;
+    }
+  }
+}
