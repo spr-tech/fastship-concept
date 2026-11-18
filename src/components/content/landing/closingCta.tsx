@@ -9,7 +9,11 @@ export default function ClosingCta() {
     <section aria-labelledby="cta-title" className="mx-auto max-w-7xl px-5 pb-section-xl md:px-8">
       <Reveal className="relative isolate overflow-hidden rounded-card-lg bg-accent p-[clamp(2rem,5vw,4rem)] text-ink">
         {/* Large faint arrow in the corner, bobbing slowly. */}
-        <ArrowUpRightIcon size={210} strokeWidth={0.6} className="absolute -top-6 -right-6 -z-10 size-28 animate-bob opacity-18 sm:size-52" />
+        {/* The bob runs on a wrapper span, not the <svg>: Chrome can't hand an SVG element's translate to the
+            compositor, so animating the icon itself repainted it on the main thread every frame. */}
+        <span aria-hidden="true" className="absolute -top-6 -right-6 -z-10 block size-28 animate-bob opacity-18 sm:size-52">
+          <ArrowUpRightIcon size={210} strokeWidth={0.6} className="size-full" />
+        </span>
         <Text variant="closing" id="cta-title" className="max-w-200">
           {closingCta.title}
         </Text>

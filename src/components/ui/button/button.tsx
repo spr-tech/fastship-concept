@@ -41,8 +41,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   subtle: "border border-ink/15 font-semibold text-ink hover:bg-ink/5",
   outlineOnDark: "border-[1.5px] border-text-on-dark text-text-on-dark",
   surface: "border-[1.5px] border-border-strong bg-surface font-semibold text-ink",
-  // Frosted glass over a dark section or photo.
-  glassOnDark: "border border-text-on-dark/25 bg-text-on-dark/10 font-semibold text-text-on-dark backdrop-blur-md hover:bg-text-on-dark/20",
+  // Frosted glass over a dark section or photo. Blurred from lg only: blur is costly on phones.
+  glassOnDark: "border border-text-on-dark/25 bg-text-on-dark/10 font-semibold text-text-on-dark hover:bg-text-on-dark/20 lg:backdrop-blur-md",
 };
 
 // Every size is at least 44px tall, the minimum touch target, with 14px text. "sm" is the nav size;

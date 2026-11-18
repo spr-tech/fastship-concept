@@ -163,6 +163,19 @@
     }
   }
 
+  /* The hero intro block: rises without fading. It holds the page's LCP (Largest Contentful Paint)
+     text on phones, and text that starts at opacity 0 only counts once it fades in, which delayed
+     LCP by about 2.5s on a throttled phone. Visible from the first frame, it paints with the HTML. */
+  --animate-slide-up: slide-up 0.7s var(--ease-out-soft) both;
+  @keyframes slide-up {
+    from {
+      translate: 0 24px;
+    }
+    to {
+      translate: 0 0;
+    }
+  }
+
   /* Intro text, cards, notices and the mobile menu panel. */
   --animate-fade-up: fade-up 0.6s ease both;
   @keyframes fade-up {
@@ -564,6 +577,104 @@
   animation: hero-float var(--float-duration, 7s) ease-in-out var(--float-delay, 0s) infinite;
 }
 
+/* The plane on the dashboard's route strip, flying the first route (LOS to LHR) on the compositor.
+   Keyframes are sampled from that route's curve (dashboardWindow.tsx) with an ease-in-out, as
+   percentages of the 320x84 drawing box. The resting values are the reduced-motion state:
+   mid-route, pointing along the line. */
+.route-plane {
+  translate: 28.44% 20.24%;
+  animation: route-plane-move 3.6s linear infinite;
+}
+
+.route-plane-turn {
+  rotate: -19.3deg;
+  animation: route-plane-turn 3.6s linear infinite;
+}
+
+@keyframes route-plane-move {
+  0% {
+    translate: 10.63% 76.19%;
+  }
+  8.3% {
+    translate: 11.23% 73.23%;
+  }
+  16.7% {
+    translate: 13.01% 64.96%;
+  }
+  25% {
+    translate: 15.84% 53.15%;
+  }
+  33.3% {
+    translate: 19.53% 40.18%;
+  }
+  41.7% {
+    translate: 23.83% 28.55%;
+  }
+  50% {
+    translate: 28.44% 20.24%;
+  }
+  58.3% {
+    translate: 33.05% 16.23%;
+  }
+  66.7% {
+    translate: 37.34% 16.37%;
+  }
+  75% {
+    translate: 41.03% 19.47%;
+  }
+  83.3% {
+    translate: 43.86% 23.73%;
+  }
+  91.7% {
+    translate: 45.64% 27.23%;
+  }
+  100% {
+    translate: 46.25% 28.57%;
+  }
+}
+
+@keyframes route-plane-turn {
+  0% {
+    rotate: -52.4deg;
+  }
+  8.3% {
+    rotate: -51.7deg;
+  }
+  16.7% {
+    rotate: -49.5deg;
+  }
+  25% {
+    rotate: -45.6deg;
+  }
+  33.3% {
+    rotate: -39.5deg;
+  }
+  41.7% {
+    rotate: -30.8deg;
+  }
+  50% {
+    rotate: -19.3deg;
+  }
+  58.3% {
+    rotate: -6.0deg;
+  }
+  66.7% {
+    rotate: 7.0deg;
+  }
+  75% {
+    rotate: 17.7deg;
+  }
+  83.3% {
+    rotate: 25.2deg;
+  }
+  91.7% {
+    rotate: 29.4deg;
+  }
+  100% {
+    rotate: 30.8deg;
+  }
+}
+
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .hero-layer {
     transform: translate3d(
@@ -611,7 +722,6 @@ html[data-nav] .site-header {
   border-radius: 9999px;
   background: color-mix(in oklab, var(--surface) 78%, transparent);
   box-shadow: var(--shadow-glass);
-  backdrop-filter: blur(16px) saturate(1.4);
   opacity: 0;
   scale: 1.03 1.1;
   transition:
@@ -625,9 +735,12 @@ html[data-nav] .site-header {
   }
 }
 
+/* The blur is only switched on while the glass shows: a blurred layer costs rendering work even at
+   opacity 0, which slowed the first paint on phones. */
 html[data-nav="scrolled"] .site-header-bar::before {
   opacity: 1;
   scale: 1;
+  backdrop-filter: blur(16px) saturate(1.4);
 }
 
 /* ---------------------------------------------------------------------------------------------

@@ -23,7 +23,8 @@ export default function Hero() {
       </Text>
 
       <div className="mt-block flex flex-wrap items-start gap-10 lg:gap-12">
-        <div className="min-w-0 flex-[1_1_380px] animate-fade-up [animation-delay:350ms] [animation-duration:700ms]">
+        {/* Rises but never starts invisible: this text is the LCP element on phones (see slide-up in globals.css). */}
+        <div className="min-w-0 flex-[1_1_380px] animate-slide-up [animation-delay:200ms]">
           <Text variant="leadLg" tone="body" className="max-w-115">
             {hero.intro}
           </Text>
