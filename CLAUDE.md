@@ -104,7 +104,9 @@ src/
 │   ├── sign-in/page.tsx
 │   ├── sign-up/page.tsx
 │   ├── robots.ts                  # Disallow all: this is a concept
-│   ├── opengraph-image.png        # 1200×630 preview, added in the metadata part
+│   ├── opengraph-image.png        # 1200×630 preview marked "Redesign concept", plus .alt.txt
+│   ├── favicon.ico                # 16/32/48px: the logo's mark, cropped from the real PNG, on cream
+│   ├── icon.png, apple-icon.png   # 192px and 180px versions of the same tile
 │   └── not-found.tsx
 │
 ├── assets/images/                 # Imported, so next/image knows sizes
@@ -248,12 +250,12 @@ who set larger text in their browser.
 
 | Token                      | Size (phone–desktop) | Used for                                       |
 | -------------------------- | -------------------- | ---------------------------------------------- |
-| `display-hero`             | 40–72px              | Hero headline (two lines at 1440px)            |
-| `display-auth`             | 40–56px              | Auth panel headlines                           |
-| `display-closing`          | 36–52px              | Closing CTA                                    |
-| `display-section`          | 32–44px              | Section headings                               |
-| `display-contact`          | 30–38px              | Contact heading                                |
-| `display-stat`             | 48–66px              | "24/7"                                         |
+| `display-hero`             | 40–74px              | Hero headline (two lines at 1440px)            |
+| `display-auth`             | 40–58px              | Auth panel headlines                           |
+| `display-closing`          | 36–53px              | Closing CTA                                    |
+| `display-section`          | 32–45px              | Section headings                               |
+| `display-contact`          | 30–39px              | Contact heading                                |
+| `display-stat`             | 48–68px              | "24/7"                                         |
 | `display-statement`        | 20–26px              | The about statement                            |
 | `display-sm` / `display-number` / `display-step` | 26 / 34 / 24px | Track heading, card numbers, step circles |
 | `card-title-lg` / `card-title` | 21 / 19px        | Anton card titles                              |
