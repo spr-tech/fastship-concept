@@ -578,3 +578,52 @@
     transition: transform 0.8s var(--ease-hover);
   }
 }
+
+/* ---------------------------------------------------------------------------------------------
+   Site header. Flat at the top of the page: no background, content on the page's edges. Once the
+   page scrolls (data-nav="scrolled", set by NavScrollState), a frosted glass bar fades in behind the
+   content, pulled in from the edges. The glass is its own layer, so the logo, links and buttons never
+   move and nothing shifts. Sticky only once the script has run: without JavaScript the header is a
+   plain flat bar that scrolls away. Reduced motion switches instantly (see the base layer).
+   --------------------------------------------------------------------------------------------- */
+.site-header {
+  position: relative;
+}
+
+html[data-nav] .site-header {
+  position: sticky;
+  top: 0;
+}
+
+.site-header-bar {
+  isolation: isolate;
+}
+
+.site-header-bar::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0.5rem;
+  z-index: -1;
+  border: 1px solid color-mix(in oklab, var(--ink) 8%, transparent);
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--surface) 78%, transparent);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  opacity: 0;
+  scale: 1.03 1.1;
+  transition:
+    opacity 0.45s ease-out,
+    scale 0.45s ease-out;
+}
+
+@media (min-width: 768px) {
+  .site-header-bar::before {
+    inset-inline: 1rem;
+  }
+}
+
+html[data-nav="scrolled"] .site-header-bar::before {
+  opacity: 1;
+  scale: 1;
+}

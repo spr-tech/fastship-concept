@@ -98,8 +98,8 @@ export default function MobileMenu({ navigation, activeHref, className }: Mobile
       </button>
 
       {isOpen &&
-        // In a portal on <body>: the glass bar's backdrop-filter would otherwise trap this
-        // fixed layer inside the bar instead of covering the page.
+        // In a portal on <body>, so nothing in the header (a transform or backdrop-filter) can trap
+        // this fixed layer inside the bar instead of covering the page.
         createPortal(
           <div
             aria-hidden="true"
@@ -114,7 +114,7 @@ export default function MobileMenu({ navigation, activeHref, className }: Mobile
           id={menuId}
           ref={panelRef}
           aria-label={navigation.label}
-          className="absolute inset-x-0 top-[calc(100%+8px)] z-20 flex animate-fade-up flex-col gap-0.5 rounded-card-lg bg-ink p-2 text-text-on-dark shadow-menu [animation-duration:250ms]"
+          className="absolute inset-x-2 top-[calc(100%+8px)] z-20 md:inset-x-4 flex animate-fade-up flex-col gap-0.5 rounded-card-lg bg-ink p-2 text-text-on-dark shadow-menu [animation-duration:250ms]"
         >
           {navigation.links.map((link) => {
             const isActive = link.href === activeHref;
