@@ -104,7 +104,9 @@ src/
 │   ├── sign-in/page.tsx
 │   ├── sign-up/page.tsx
 │   ├── robots.ts                  # Disallow all: this is a concept
-│   ├── opengraph-image.png        # 1200×630 preview, added in the metadata part
+│   ├── opengraph-image.png        # 1200×630 preview marked "Redesign concept", plus .alt.txt
+│   ├── favicon.ico                # 16/32/48px: the logo's mark, cropped from the real PNG, on cream
+│   ├── icon.png, apple-icon.png   # 192px and 180px versions of the same tile
 │   └── not-found.tsx
 │
 ├── assets/images/                 # Imported, so next/image knows sizes
